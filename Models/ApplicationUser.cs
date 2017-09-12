@@ -21,7 +21,8 @@ namespace projectPrint.Models
         [StringLength(50)]
         public string LastName { get; set; }
 
-        public virtual ICollection<Address> Addresses { get; set; }
+        public virtual ICollection<BillingAddress> BillingAddresses { get; set; }
+        public virtual ICollection<ShippingAddress> ShippingAddresses { get; set; }
         public virtual ICollection<Order> Order { get; set; }
         public virtual ICollection<PaymentType> PaymentType { get; set; }
     }

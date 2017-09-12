@@ -1,0 +1,61 @@
+@model projectPrint.Models.CompositeProduct
+
+@{
+    ViewData["Title"] = "Edit";
+}
+
+<h2>Edit</h2>
+
+<form asp-action="Edit">
+    <div class="form-horizontal">
+        <h4>CompositeProduct</h4>
+        <hr />
+        <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+    <input type="hidden" asp-for="CompositeProductID" />
+        <div class="form-group">
+            <label asp-for="DateCreated" class="col-md-2 control-label"></label>
+            <div class="col-md-10">
+                <input asp-for="DateCreated" class="form-control" />
+                <span asp-validation-for="DateCreated" class="text-danger"></span>
+            </div>
+        </div>
+        <div class="form-group">
+            <label asp-for="ProductTypeID" class="control-label col-md-2"></label>
+            <div class="col-md-10">
+                <select asp-for="ProductTypeID" class="form-control" asp-items="ViewBag.ProductTypeID"></select>
+                <span asp-validation-for="ProductTypeID" class="text-danger"></span>
+            </div>
+        </div>
+        <div class="form-group">
+            <label asp-for="InkID" class="control-label col-md-2"></label>
+            <div class="col-md-10">
+                <select asp-for="InkID" class="form-control" asp-items="ViewBag.InkID"></select>
+                <span asp-validation-for="InkID" class="text-danger"></span>
+            </div>
+        </div>
+        <div class="form-group">
+            <label asp-for="ScreenID" class="control-label col-md-2"></label>
+            <div class="col-md-10">
+                <select asp-for="ScreenID" class="form-control" asp-items="ViewBag.ScreenID"></select>
+                <span asp-validation-for="ScreenID" class="text-danger"></span>
+            </div>
+        </div>
+        <div class="form-group">
+            <label asp-for="OrderID" class="control-label col-md-2"></label>
+            <div class="col-md-10">
+                <select asp-for="OrderID" class="form-control" asp-items="ViewBag.OrderID"></select>
+                <span asp-validation-for="OrderID" class="text-danger"></span>
+            </div>
+        </div>
+        <div class="form-group">
+            <div class="col-md-offset-2 col-md-10">
+                <input type="submit" value="Save" class="btn btn-default" />
+            </div>
+        </div>
+    </div>
+</form>
+
+<div>
+    <a asp-action="Index">Back to List</a>
+</div>
+

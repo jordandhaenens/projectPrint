@@ -22,12 +22,12 @@ namespace projectPrint.Models
         // ForeignKey
         // This property will be set in a ViewModel
         public int ? ShippingAddressID { get; set; }
-        public Address ShippingAddress { get; set; }
+        public ShippingAddress ShippingAddress { get; set; }
         
         // ForeignKey
         // This property will be set in a ViewModel
         public int ? BillingAddressID { get; set; }
-        public Address BillingAddress { get; set; }
+        public BillingAddress BillingAddress { get; set; }
 
         public virtual ICollection<CompositeProduct> CompositeProduct { get; set; }
     }
