@@ -6,10 +6,10 @@ using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
 
 namespace projectPrint.Models
 {
-    public class Address
+    public class ShippingAddress
     {
         [Key]
-        public int AddressID { get; set; }
+        public int ShippingAddressID { get; set; }
 
         [Required]
         public string Street { get; set; }
@@ -27,8 +27,6 @@ namespace projectPrint.Models
         [RegularExpression(@"^\d{5}(-\d{4})?$", ErrorMessage = "Invalid Zip Code")]
         public int ZipCode { get; set; }
 
-        public int ? IsBillingAddress { get; set; }
-        public int ? IsShippingAddress { get; set; }
         public int ? IsDefault { get; set; }
         
         [Required]

@@ -22,5 +22,22 @@ namespace projectPrint.Data
             // For example, you can rename the ASP.NET Identity table names and more.
             // Add your customizations after calling base.OnModelCreating(builder);
         }
+
+        public DbSet<projectPrint.Models.Screen> Screen { get; set; }
+
+        public DbSet<projectPrint.Models.ShippingAddress> ShippingAddress { get; set; }
+
+        public DbSet<projectPrint.Models.ProductType> ProductType { get; set; }
+
+        public DbSet<projectPrint.Models.PaymentType> PaymentType { get; set; }
+
+        public DbSet<projectPrint.Models.Order> Order { get; set; }
+
+        public DbSet<projectPrint.Models.Ink> Ink { get; set; }
+
+        public DbSet<projectPrint.Models.CompositeProduct> CompositeProduct { get; set; }
+
+        public DbSet<projectPrint.Models.BillingAddress> BillingAddress { get; set; }
+
     }
 }
