@@ -1,0 +1,42 @@
+@model projectPrint.Models.Order
+
+@{
+    ViewData["Title"] = "Details";
+}
+
+<h2>Details</h2>
+
+<div>
+    <h4>Order</h4>
+    <hr />
+    <dl class="dl-horizontal">
+        <dt>
+            @Html.DisplayNameFor(model => model.IsFulfilled)
+        </dt>
+        <dd>
+            @Html.DisplayFor(model => model.IsFulfilled)
+        </dd>
+        <dt>
+            @Html.DisplayNameFor(model => model.BillingAddress)
+        </dt>
+        <dd>
+            @Html.DisplayFor(model => model.BillingAddress.City)
+        </dd>
+        <dt>
+            @Html.DisplayNameFor(model => model.PaymentType)
+        </dt>
+        <dd>
+            @Html.DisplayFor(model => model.PaymentType.AccountNumber)
+        </dd>
+        <dt>
+            @Html.DisplayNameFor(model => model.ShippingAddress)
+        </dt>
+        <dd>
+            @Html.DisplayFor(model => model.ShippingAddress.City)
+        </dd>
+    </dl>
+</div>
+<div>
+    <a asp-action="Edit" asp-route-id="@Model.OrderID">Edit</a> |
+    <a asp-action="Index">Back to List</a>
+</div>
