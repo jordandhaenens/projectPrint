@@ -13,17 +13,20 @@
     {
         <li class="@ManageNavPages.ExternalLoginsNavClass(ViewContext)"><a asp-action="ExternalLogins">External logins</a></li>
     }
-    <li class="@ManageNavPages.TwoFactorAuthenticationNavClass(ViewContext)"><a asp-action="TwoFactorAuthentication">Two-factor authentication</a></li>
+    
     @if (User.IsInRole("Administrator"))
     {
         <li>
             <a asp-area="" asp-controller="Screen" asp-action="Index" title="View Screens">View Screens</a>
         </li>
         <li>
-            <a asp-area="" asp-controller="Screen" asp-action="Index" title="View Inks">View Inks</a>
+            <a asp-area="" asp-controller="Ink" asp-action="Index" title="View Inks">View Inks</a>
         </li>
         <li>
-            <a asp-area="" asp-controller="Screen" asp-action="Index" title="View Product Types">View Product Types</a>
+            <a asp-area="" asp-controller="ProductType" asp-action="Index" title="View Product Types">View Product Types</a>
+        </li>
+        <li>
+            <a asp-area="" asp-controller="Manage" asp-action="Inventory" title="View Inventory">View Inventory</a>
         </li>
     }
 </ul>

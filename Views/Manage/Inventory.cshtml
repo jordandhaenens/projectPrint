@@ -1,0 +1,153 @@
+@model ProjectPrintDos.Models.ManageViewModels.InventoryVM
+
+<h4>@ViewBag.Title</h4>
+
+<!-- Screens Table -->
+<h4>Screens</h4>
+<table class="table">
+    <thead>
+        <tr>
+            <th>
+                <h4>Title</h4>
+            </th>
+            <th>
+                <h4>Cost</h4>
+            </th>
+            <th>
+                <h4>Price</h4>
+            </th>
+            <th>
+                <h4>Quantity</h4>
+            </th>
+            <th></th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var item in Model.Screens)
+        {
+            <tr>
+                <td>
+                    <a asp-controller="Screen" asp-action="Details" asp-route-id="@item.ScreenID">
+                        @Html.DisplayFor(modelItem => item.Title)
+                    </a>
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Cost)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Price)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Quantity)
+                </td>
+                <td>
+                    <a asp-controller="Screen" asp-action="Edit" asp-route-id="@item.ScreenID">Edit</a> | 
+                    <a asp-controller="Screen" asp-action="Delete" asp-route-id="@item.ScreenID">Delete</a>
+                </td>
+            </tr>
+        }
+    
+    </tbody>
+</table>
+
+<!-- Inks Table -->
+<h4>Inks</h4>
+<table class="table">
+    <thead>
+        <tr>
+            <th>
+                <h4>Title</h4>
+            </th>
+            <th>
+                <h4>Cost</h4>
+            </th>
+            <th>
+                <h4>Price</h4>
+            </th>
+            <th>
+                <h4>Quantity</h4>
+            </th>
+            <th></th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var item in Model.Inks)
+        {
+            <tr>
+                <td>
+                    <a asp-controller="Ink" asp-action="Details" asp-route-id="@item.InkID">
+                        @Html.DisplayFor(modelItem => item.Title)
+                    </a>
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Cost)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Price)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Quantity)
+                </td>
+                <td>
+                    <a asp-controller="Ink" asp-action="Edit" asp-route-id="@item.InkID">Edit</a> | 
+                    <a asp-controller="Ink" asp-action="Delete" asp-route-id="@item.InkID">Delete</a>
+                </td>
+            </tr>
+        }
+    
+    </tbody>
+</table>
+
+<!-- ProductTypes Table -->
+<h4>Product Types</h4>
+<table class="table">
+    <thead>
+        <tr>
+            <th>
+                <h4>Title</h4>
+            </th>
+            <th>
+                <h4>Base Color</h4>
+            </th>
+            <th>
+                <h4>Cost</h4>
+            </th>
+            <th>
+                <h4>Price</h4>
+            </th>
+            <th>
+                <h4>Quantity</h4>
+            </th>
+            <th></th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var item in Model.ProductTypes)
+        {
+            <tr>
+                <td>
+                    <a asp-controller="ProductType" asp-action="Details" asp-route-id="@item.ProductTypeID">
+                        @Html.DisplayFor(modelItem => item.Title)
+                    </a>
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.BaseColor)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Cost)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Price)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Quantity)
+                </td>
+                <td>
+                    <a asp-controller="ProductType" asp-action="Edit" asp-route-id="@item.ProductTypeID">Edit</a> | 
+                    <a asp-controller="ProductType" asp-action="Delete" asp-route-id="@item.ProductTypeID">Delete</a>
+                </td>
+            </tr>
+        }
+    
+    </tbody>
+</table>

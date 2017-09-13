@@ -24,7 +24,7 @@ namespace ProjectPrintDos.Controllers
         // GET: ProductType
         public async Task<IActionResult> Index()
         {
-            return View(await _context.ProductType.ToListAsync());
+            return View(await _context.ProductType.OrderBy(pt => pt.BaseColor).ToListAsync());
         }
 
         // GET: ProductType/Details/5
