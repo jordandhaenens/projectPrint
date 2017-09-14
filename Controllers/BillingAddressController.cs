@@ -70,7 +70,7 @@ namespace ProjectPrintDos.Controllers
                 billingAddress.User = user;
                 _context.Add(billingAddress);
                 await _context.SaveChangesAsync();
-                return RedirectToAction("Index");
+                return RedirectToAction("GetAddresses", "Manage");
             }
             return View(billingAddress);
         }
@@ -98,6 +98,9 @@ namespace ProjectPrintDos.Controllers
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> Edit(int id, [Bind("BillingAddressID,Street,Unit,City,State,ZipCode,IsDefault")] BillingAddress billingAddress)
         {
+            ModelState.Remove("User");
+            ApplicationUser user = await _userManager.GetUserAsync(User);
+
             if (id != billingAddress.BillingAddressID)
             {
                 return NotFound();
@@ -107,6 +110,7 @@ namespace ProjectPrintDos.Controllers
             {
                 try
                 {
+                    billingAddress.User = user;
                     _context.Update(billingAddress);
                     await _context.SaveChangesAsync();
                 }
@@ -121,7 +125,7 @@ namespace ProjectPrintDos.Controllers
                         throw;
                     }
                 }
-                return RedirectToAction("Index");
+                return RedirectToAction("GetAddresses", "Manage");
             }
             return View(billingAddress);
         }
@@ -152,7 +156,7 @@ namespace ProjectPrintDos.Controllers
             var billingAddress = await _context.BillingAddress.SingleOrDefaultAsync(m => m.BillingAddressID == id);
             _context.BillingAddress.Remove(billingAddress);
             await _context.SaveChangesAsync();
-            return RedirectToAction("Index");
+            return RedirectToAction("GetAddresses", "Manage");
         }
 
         private bool BillingAddressExists(int id)

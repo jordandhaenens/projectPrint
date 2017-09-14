@@ -13,7 +13,7 @@ namespace ProjectPrintDos.Models.ManageViewModels
 
         public AddressVM(ApplicationDbContext ctx, ApplicationUser user)
         {
-            BillingAddresses = ctx.BillingAddress.Where(ba => ba.User == user).ToList();
+            BillingAddresses =  ctx.BillingAddress.Where(ba => ba.User == user).ToList();
             ShippingAddresses = ctx.ShippingAddress.Where(sa => sa.User == user).ToList();
         }
     }

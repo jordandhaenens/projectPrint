@@ -2,21 +2,27 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
 using ProjectPrintDos.Data;
 using ProjectPrintDos.Models;
+using ProjectPrintDos.Models.PaymentViewModels;
 
 namespace ProjectPrintDos.Controllers
 {
+    [Authorize]
     public class PaymentTypeController : Controller
     {
         private readonly ApplicationDbContext _context;
+        private readonly UserManager<ApplicationUser> _userManager;
 
-        public PaymentTypeController(ApplicationDbContext context)
+        public PaymentTypeController(ApplicationDbContext context, UserManager<ApplicationUser> user)
         {
             _context = context;    
+            _userManager = user;
         }
 
         // GET: PaymentType
@@ -49,6 +55,7 @@ namespace ProjectPrintDos.Controllers
             return View();
         }
 
+        // This action is authored by Jordan Dhaenens
         // POST: PaymentType/Create
         // To protect from overposting attacks, please enable the specific properties you want to bind to, for 
         // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
@@ -56,15 +63,22 @@ namespace ProjectPrintDos.Controllers
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> Create([Bind("PaymentTypeID,Type,AccountNumber,IsActive,IsPrimary")] PaymentType paymentType)
         {
+            ModelState.Remove("User");
+            ModelState.Remove("IsActive");
+            ApplicationUser user = await _userManager.GetUserAsync(User);
+
             if (ModelState.IsValid)
             {
+                paymentType.IsActive = 1;
+                paymentType.User = user;
                 _context.Add(paymentType);
                 await _context.SaveChangesAsync();
-                return RedirectToAction("Index");
+                return RedirectToAction("PaymentTypes", "Manage");
             }
             return View(paymentType);
         }
 
+        // Jordan Dhaenens modified this action to filter out inactive PaymentTypes
         // GET: PaymentType/Edit/5
         public async Task<IActionResult> Edit(int? id)
         {
@@ -74,13 +88,14 @@ namespace ProjectPrintDos.Controllers
             }
 
             var paymentType = await _context.PaymentType.SingleOrDefaultAsync(m => m.PaymentTypeID == id);
-            if (paymentType == null)
+            if (paymentType == null || paymentType.IsActive != 1)
             {
                 return NotFound();
             }
             return View(paymentType);
         }
 
+        // This action is modified by Jordan Dhaenens to prevent browser developer tools from tampering with the IsActive property
         // POST: PaymentType/Edit/5
         // To protect from overposting attacks, please enable the specific properties you want to bind to, for 
         // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
@@ -93,10 +108,16 @@ namespace ProjectPrintDos.Controllers
                 return NotFound();
             }
 
+            ModelState.Remove("User");
+            ModelState.Remove("IsActive");
+            ApplicationUser user = await _userManager.GetUserAsync(User);
+
             if (ModelState.IsValid)
             {
                 try
                 {
+                    paymentType.IsActive = 1;
+                    paymentType.User = user;
                     _context.Update(paymentType);
                     await _context.SaveChangesAsync();
                 }
@@ -111,7 +132,7 @@ namespace ProjectPrintDos.Controllers
                         throw;
                     }
                 }
-                return RedirectToAction("Index");
+                return RedirectToAction("PaymentTypes", "Manage");
             }
             return View(paymentType);
         }
@@ -126,7 +147,7 @@ namespace ProjectPrintDos.Controllers
 
             var paymentType = await _context.PaymentType
                 .SingleOrDefaultAsync(m => m.PaymentTypeID == id);
-            if (paymentType == null)
+            if (paymentType == null || paymentType.IsActive != 1)
             {
                 return NotFound();
             }
@@ -139,10 +160,34 @@ namespace ProjectPrintDos.Controllers
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> DeleteConfirmed(int id)
         {
-            var paymentType = await _context.PaymentType.SingleOrDefaultAsync(m => m.PaymentTypeID == id);
-            _context.PaymentType.Remove(paymentType);
+            PaymentDeleteVM modelVM = new PaymentDeleteVM(_context, id);
+            
+            if (modelVM.Order == null)
+            {
+                // No instance of this PaymentTypeId exists in Order table. OK to erase
+                _context.PaymentType.Remove(modelVM.PaymentType);
+            }
+            else if (ModelState.IsValid)
+            {
+                try
+                {
+                    modelVM.PaymentType.IsActive = 0;
+                    _context.Update(modelVM.PaymentType);
+                }
+                catch (DbUpdateConcurrencyException)
+                {
+                    if (!PaymentTypeExists(modelVM.PaymentType.PaymentTypeID))
+                    {
+                        return NotFound();
+                    }
+                    else
+                    {
+                        throw;
+                    }
+                }
+            }
             await _context.SaveChangesAsync();
-            return RedirectToAction("Index");
+            return RedirectToAction("PaymentTypes", "Manage");
         }
 
         private bool PaymentTypeExists(int id)

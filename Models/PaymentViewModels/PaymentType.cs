@@ -4,7 +4,7 @@ using System.Threading.Tasks;
 using System.Collections.Generic;
 using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
 
-namespace ProjectPrintDos.Models
+namespace ProjectPrintDos.Models.PaymentViewModels
 {
     public class PaymentType
     {

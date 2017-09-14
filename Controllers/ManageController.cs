@@ -148,7 +148,7 @@ namespace ProjectPrintDos.Controllers
 
         // This method is authored by Jordan Dhaenens
         // This method will display a User's addresses
-        // GET: /Manage/Address
+        // GET: /Manage/GetAddresses
         [HttpGet]
         public async Task<IActionResult> GetAddresses()
         {
@@ -157,6 +157,18 @@ namespace ProjectPrintDos.Controllers
             AddressVM addresses = new AddressVM(_context, user);
             return View(addresses);
         } 
+
+        // This method is authored by Jordan Dhaenens
+        // This method will retrieve all PaymentTypes for User
+        // GET: /Manage/PaymentTypes
+        [HttpGet]
+        public async Task<IActionResult> PaymentTypes()
+        {
+            ApplicationUser user = await _userManager.GetUserAsync(User);
+
+            GetPaymentTypesVM paymentTypes = new GetPaymentTypesVM(_context, user);
+            return View(paymentTypes);
+        }
 
         [HttpGet]
         public async Task<IActionResult> ChangePassword()
