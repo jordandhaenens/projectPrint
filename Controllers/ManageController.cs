@@ -144,7 +144,31 @@ namespace ProjectPrintDos.Controllers
 
             InventoryVM model = new InventoryVM(_context);
             return View(model);
-        }   
+        }  
+
+        // This method is authored by Jordan Dhaenens
+        // This method will display a User's addresses
+        // GET: /Manage/GetAddresses
+        [HttpGet]
+        public async Task<IActionResult> GetAddresses()
+        {
+            ApplicationUser user = await _userManager.GetUserAsync(User);
+
+            AddressVM addresses = new AddressVM(_context, user);
+            return View(addresses);
+        } 
+
+        // This method is authored by Jordan Dhaenens
+        // This method will retrieve all PaymentTypes for User
+        // GET: /Manage/PaymentTypes
+        [HttpGet]
+        public async Task<IActionResult> PaymentTypes()
+        {
+            ApplicationUser user = await _userManager.GetUserAsync(User);
+
+            GetPaymentTypesVM paymentTypes = new GetPaymentTypesVM(_context, user);
+            return View(paymentTypes);
+        }
 
         [HttpGet]
         public async Task<IActionResult> ChangePassword()

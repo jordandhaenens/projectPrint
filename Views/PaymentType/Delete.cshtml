@@ -25,12 +25,6 @@
             @Html.DisplayFor(model => model.AccountNumber)
         </dd>
         <dt>
-            @Html.DisplayNameFor(model => model.IsActive)
-        </dt>
-        <dd>
-            @Html.DisplayFor(model => model.IsActive)
-        </dd>
-        <dt>
             @Html.DisplayNameFor(model => model.IsPrimary)
         </dt>
         <dd>
@@ -41,7 +35,7 @@
     <form asp-action="Delete">
         <div class="form-actions no-color">
             <input type="submit" value="Delete" class="btn btn-default" /> |
-            <a asp-action="Index">Back to List</a>
+            <a asp-controller="Manage" asp-action="PaymentTypes">Back to Payment Options</a>
         </div>
     </form>
 </div>

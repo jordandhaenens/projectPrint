@@ -223,7 +223,8 @@ namespace ProjectPrintDos.Controllers
                 var user = new ApplicationUser { FirstName = model.FirstName, LastName = model.LastName, UserName = model.Email, Email = model.Email };
                 var result = await _userManager.CreateAsync(user, model.Password);
                 // Testing to see if new users can be automatically added to role "User" when registering
-                // await _userManager.AddToRoleAsync(user, "User");
+                await _userManager.AddToRoleAsync(user, "USER");
+                
                 if (result.Succeeded)
                 {
                     _logger.LogInformation("User created a new account with password.");

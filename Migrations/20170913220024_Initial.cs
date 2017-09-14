@@ -214,7 +214,7 @@ namespace ProjectPrintDos.Migrations
                     IsDefault = table.Column<int>(type: "INTEGER", nullable: true),
                     State = table.Column<string>(type: "TEXT", nullable: false),
                     Street = table.Column<string>(type: "TEXT", nullable: false),
-                    Unit = table.Column<int>(type: "INTEGER", nullable: false),
+                    Unit = table.Column<int>(type: "INTEGER", nullable: true),
                     UserId = table.Column<string>(type: "TEXT", nullable: false),
                     ZipCode = table.Column<int>(type: "INTEGER", nullable: false)
                 },
@@ -262,7 +262,7 @@ namespace ProjectPrintDos.Migrations
                     IsDefault = table.Column<int>(type: "INTEGER", nullable: true),
                     State = table.Column<string>(type: "TEXT", nullable: false),
                     Street = table.Column<string>(type: "TEXT", nullable: false),
-                    Unit = table.Column<int>(type: "INTEGER", nullable: false),
+                    Unit = table.Column<int>(type: "INTEGER", nullable: true),
                     UserId = table.Column<string>(type: "TEXT", nullable: false),
                     ZipCode = table.Column<int>(type: "INTEGER", nullable: false)
                 },

@@ -1,0 +1,88 @@
+@model ProjectPrintDos.Models.ManageViewModels.AddressVM
+
+
+<!-- BillingAddress Table -->
+<table class="table">
+    <thead>
+        <tr>
+            <th>
+                <h4>Billing Addresses</h4>
+            </th>
+            <th>
+                <h4>Is Default</h4>
+            </th>
+            <th><a class="btn btn-primary" asp-controller="BillingAddress" asp-action="Create">Add New Billing Address</a></th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var item in Model.BillingAddresses)
+        {
+            <tr>
+                <td>
+                    <a asp-controller="BillingAddress" asp-action="Details" asp-route-id="@item.BillingAddressID">
+                        <p>
+                            @item.Street <br>
+                            @if (@item.Unit != null)
+                            {
+                                @item.Unit <br>
+                            }
+                            @item.City
+                            @item.State
+                            @item.ZipCode
+                        </p>    
+                    </a>
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.IsDefault)
+                </td>
+                <td>
+                    <a asp-controller="BillingAddress" asp-action="Edit" asp-route-id="@item.BillingAddressID">Edit</a> | 
+                    <a asp-controller="BillingAddress" asp-action="Delete" asp-route-id="@item.BillingAddressID">Delete</a>
+                </td>
+            </tr>
+        }
+    </tbody>
+</table>
+
+<!-- ShippingAddress Table -->
+<table class="table">
+    <thead>
+        <tr>
+            <th>
+                <h4>Shipping Addresses</h4>
+            </th>
+            <th>
+                <h4>Is Default</h4>
+            </th>
+            <th><a class="btn btn-primary" asp-controller="ShippingAddress" asp-action="Create">Add New Shipping Address</a></th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var item in Model.ShippingAddresses)
+        {
+            <tr>
+                <td>
+                    <a asp-controller="ShippingAddress" asp-action="Details" asp-route-id="@item.ShippingAddressID">
+                        <p>
+                            @item.Street <br>
+                            @if (@item.Unit != null)
+                            {
+                                @item.Unit <br>
+                            }
+                            @item.City
+                            @item.State
+                            @item.ZipCode
+                        </p>    
+                    </a>
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.IsDefault)
+                </td>
+                <td>
+                    <a asp-controller="ShippingAddress" asp-action="Edit" asp-route-id="@item.ShippingAddressID">Edit</a> | 
+                    <a asp-controller="ShippingAddress" asp-action="Delete" asp-route-id="@item.ShippingAddressID">Delete</a>
+                </td>
+            </tr>
+        }
+    </tbody>
+</table>

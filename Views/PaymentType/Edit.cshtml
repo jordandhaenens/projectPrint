@@ -33,13 +33,13 @@
                 <span asp-validation-for="IsActive" class="text-danger"></span>
             </div>
         </div>
-        <div class="form-group">
+        <!-- <div class="form-group hidden">
             <label asp-for="IsPrimary" class="col-md-2 control-label"></label>
             <div class="col-md-10">
                 <input asp-for="IsPrimary" class="form-control" />
                 <span asp-validation-for="IsPrimary" class="text-danger"></span>
             </div>
-        </div>
+        </div> -->
         <div class="form-group">
             <div class="col-md-offset-2 col-md-10">
                 <input type="submit" value="Save" class="btn btn-default" />
@@ -49,6 +49,6 @@
 </form>
 
 <div>
-    <a asp-action="Index">Back to List</a>
+    <a asp-controller="Manage" asp-action="PaymentTypes">Back to Payment Options</a>
 </div>
 

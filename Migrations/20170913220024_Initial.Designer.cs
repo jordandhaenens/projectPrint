@@ -11,7 +11,7 @@ using System;
 namespace ProjectPrintDos.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    [Migration("20170912201912_Initial")]
+    [Migration("20170913220024_Initial")]
     partial class Initial
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -201,7 +201,7 @@ namespace ProjectPrintDos.Migrations
                     b.Property<string>("Street")
                         .IsRequired();
 
-                    b.Property<int>("Unit");
+                    b.Property<int?>("Unit");
 
                     b.Property<string>("UserId")
                         .IsRequired();
@@ -374,7 +374,7 @@ namespace ProjectPrintDos.Migrations
                     b.Property<string>("Street")
                         .IsRequired();
 
-                    b.Property<int>("Unit");
+                    b.Property<int?>("Unit");
 
                     b.Property<string>("UserId")
                         .IsRequired();

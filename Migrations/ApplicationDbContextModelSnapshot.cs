@@ -200,7 +200,7 @@ namespace ProjectPrintDos.Migrations
                     b.Property<string>("Street")
                         .IsRequired();
 
-                    b.Property<int>("Unit");
+                    b.Property<int?>("Unit");
 
                     b.Property<string>("UserId")
                         .IsRequired();
@@ -373,7 +373,7 @@ namespace ProjectPrintDos.Migrations
                     b.Property<string>("Street")
                         .IsRequired();
 
-                    b.Property<int>("Unit");
+                    b.Property<int?>("Unit");
 
                     b.Property<string>("UserId")
                         .IsRequired();

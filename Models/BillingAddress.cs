@@ -14,8 +14,7 @@ namespace ProjectPrintDos.Models
         [Required]
         public string Street { get; set; }
         
-        [Required]
-        public int Unit { get; set; }
+        public int? Unit { get; set; }
 
         [Required]
         public string City { get; set; }
@@ -27,7 +26,7 @@ namespace ProjectPrintDos.Models
         [RegularExpression(@"^\d{5}(-\d{4})?$", ErrorMessage = "Invalid Zip Code")]
         public int ZipCode { get; set; }
 
-        public int ? IsDefault { get; set; }
+        public int? IsDefault { get; set; }
         
         [Required]
         public ApplicationUser User { get; set; }
