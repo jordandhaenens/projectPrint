@@ -144,7 +144,19 @@ namespace ProjectPrintDos.Controllers
 
             InventoryVM model = new InventoryVM(_context);
             return View(model);
-        }   
+        }  
+
+        // This method is authored by Jordan Dhaenens
+        // This method will display a User's addresses
+        // GET: /Manage/Address
+        [HttpGet]
+        public async Task<IActionResult> GetAddresses()
+        {
+            ApplicationUser user = await _userManager.GetUserAsync(User);
+
+            AddressVM addresses = new AddressVM(_context, user);
+            return View(addresses);
+        } 
 
         [HttpGet]
         public async Task<IActionResult> ChangePassword()

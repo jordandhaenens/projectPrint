@@ -14,8 +14,7 @@ namespace ProjectPrintDos.Models
         [Required]
         public string Street { get; set; }
         
-        [Required]
-        public int Unit { get; set; }
+        public int? Unit { get; set; }
 
         [Required]
         public string City { get; set; }

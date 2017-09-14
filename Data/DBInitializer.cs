@@ -20,13 +20,13 @@ namespace ProjectPrintDos.Data
 
             if (!context.Roles.Any(r => r.Name == "Administrator"))
             {
-                var role = new IdentityRole { Name = "Administrator", NormalizedName = "Administrator" };
+                var role = new IdentityRole { Name = "Administrator", NormalizedName = "ADMINISTRATOR" };
                 await roleStore.CreateAsync(role);
             }
 
             if (!context.Roles.Any(r => r.Name == "User"))
             {
-                var role = new IdentityRole { Name = "User", NormalizedName = "User" };
+                var role = new IdentityRole { Name = "User", NormalizedName = "USER" };
                 await roleStore.CreateAsync(role);
             }
 
@@ -47,7 +47,27 @@ namespace ProjectPrintDos.Data
                 var passwordHash = new PasswordHasher<ApplicationUser>();
                 user.PasswordHash = passwordHash.HashPassword(user, "Admin8*");
                 await userstore.CreateAsync(user);
-                await userstore.AddToRoleAsync(user, "Administrator");
+                await userstore.AddToRoleAsync(user, "ADMINISTRATOR");
+            }
+
+            if (!context.ApplicationUser.Any(u => u.FirstName == "test"))
+            {
+                //  This method will be called after migrating to the latest version.
+                ApplicationUser user = new ApplicationUser {
+                    FirstName = "test",
+                    LastName = "test",
+                    UserName = "test@test.com",
+                    NormalizedUserName = "TEST@TEST.COM",
+                    Email = "test@test.com",
+                    NormalizedEmail = "TEST@TEST.COM",
+                    EmailConfirmed = true,
+                    LockoutEnabled = false,
+                    SecurityStamp = Guid.NewGuid().ToString("D")
+                };
+                var passwordHash = new PasswordHasher<ApplicationUser>();
+                user.PasswordHash = passwordHash.HashPassword(user, "test");
+                await userstore.CreateAsync(user);
+                await userstore.AddToRoleAsync(user, "USER");
                 }
         }
     }

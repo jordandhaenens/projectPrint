@@ -29,5 +29,11 @@
             <a asp-area="" asp-controller="Manage" asp-action="Inventory" title="View Inventory">View Inventory</a>
         </li>
     }
+    else
+    {
+        <li>
+            <a asp-controller="Manage" asp-action="GetAddresses">Manage Addresses</a>
+        </li>
+    }
 </ul>
 
