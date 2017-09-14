@@ -171,6 +171,7 @@ namespace ProjectPrintDos.Controllers
             {
                 try
                 {
+                    // ?Does modelVM.PaymentType have a User? Check once the ability to create orders is in place
                     modelVM.PaymentType.IsActive = 0;
                     _context.Update(modelVM.PaymentType);
                 }

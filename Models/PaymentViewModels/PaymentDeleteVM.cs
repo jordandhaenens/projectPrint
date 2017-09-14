@@ -6,6 +6,7 @@ using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
 using ProjectPrintDos.Data;
 using Microsoft.EntityFrameworkCore;
 using System.Linq;
+using ProjectPrintDos.Models;
 
 namespace ProjectPrintDos.Models.PaymentViewModels
 {
@@ -15,9 +16,8 @@ namespace ProjectPrintDos.Models.PaymentViewModels
         public Order Order { get; set; }
         public PaymentDeleteVM(ApplicationDbContext ctx, int id)
         {
-            PaymentType = ctx.PaymentType.SingleOrDefault(pt => pt.PaymentTypeID == id);
-            // PaymentType = ctx.PaymentType.SingleOrDefault(m => m.PaymentTypeID == id);
-            Order = ctx.Order.FirstOrDefault(o => o.PaymentTypeID == id);
+            this.PaymentType = ctx.PaymentType.SingleOrDefault(pt => pt.PaymentTypeID == id);
+            this.Order = ctx.Order.FirstOrDefault(o => o.PaymentTypeID == id);
         }
     }
 }
