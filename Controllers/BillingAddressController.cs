@@ -30,6 +30,7 @@ namespace ProjectPrintDos.Controllers
             return View(await _context.BillingAddress.ToListAsync());
         }
 
+        // This action is modified by Jordan Dhaenens to restrict access to address details if User is not owner
         // GET: BillingAddress/Details/5
         public async Task<IActionResult> Details(int? id)
         {
@@ -37,9 +38,10 @@ namespace ProjectPrintDos.Controllers
             {
                 return NotFound();
             }
+            ApplicationUser user = await _userManager.GetUserAsync(User);
 
             var billingAddress = await _context.BillingAddress
-                .SingleOrDefaultAsync(m => m.BillingAddressID == id);
+                .SingleOrDefaultAsync(m => m.BillingAddressID == id && m.User == user);
             if (billingAddress == null)
             {
                 return NotFound();
@@ -67,10 +69,25 @@ namespace ProjectPrintDos.Controllers
 
             if (ModelState.IsValid)
             {
-                billingAddress.User = user;
-                _context.Add(billingAddress);
-                await _context.SaveChangesAsync();
-                return RedirectToAction("GetAddresses", "Manage");
+                // Check DB for default BillingAddress and set to false if one exists
+                BillingAddress formerDefaultBillingAddress = await _context.BillingAddress.SingleOrDefaultAsync(ba => ba.IsDefault == true);
+                if (billingAddress.IsDefault == true && formerDefaultBillingAddress != null)
+                {
+                    formerDefaultBillingAddress.IsDefault = false;
+                    _context.Update(formerDefaultBillingAddress);
+
+                    billingAddress.User = user;
+                    _context.Add(billingAddress);
+                    await _context.SaveChangesAsync();
+                    return RedirectToAction("GetAddresses", "Manage");
+                }
+                else
+                {
+                    billingAddress.User = user;
+                    _context.Add(billingAddress);
+                    await _context.SaveChangesAsync();
+                    return RedirectToAction("GetAddresses", "Manage");
+                }
             }
             return View(billingAddress);
         }
@@ -82,8 +99,9 @@ namespace ProjectPrintDos.Controllers
             {
                 return NotFound();
             }
+            ApplicationUser user = await _userManager.GetUserAsync(User);
 
-            var billingAddress = await _context.BillingAddress.SingleOrDefaultAsync(m => m.BillingAddressID == id);
+            var billingAddress = await _context.BillingAddress.SingleOrDefaultAsync(m => m.BillingAddressID == id && m.User == user);
             if (billingAddress == null)
             {
                 return NotFound();
@@ -110,9 +128,32 @@ namespace ProjectPrintDos.Controllers
             {
                 try
                 {
-                    billingAddress.User = user;
-                    _context.Update(billingAddress);
-                    await _context.SaveChangesAsync();
+                    // Check DB for default BillingAddress and set to false if one exists
+                    BillingAddress formerDefaultBillingAddress = await _context.BillingAddress.SingleOrDefaultAsync(ba => ba.IsDefault == true);
+                    // User is setting the address to default and another address is already assigned that status
+                    if (billingAddress.IsDefault == true && formerDefaultBillingAddress != null)
+                    {
+                        formerDefaultBillingAddress.IsDefault = false;
+                        _context.Update(formerDefaultBillingAddress);
+
+                        billingAddress.User = user;
+                        _context.Update(billingAddress);
+                        await _context.SaveChangesAsync();
+                    }
+                    // User is changing the current IsDefault address to false
+                    else if (billingAddress.IsDefault == false && formerDefaultBillingAddress.BillingAddressID == id)
+                    {
+                        BillingAddress updatedAddress = _context.BillingAddress.SingleOrDefault(ba => ba.BillingAddressID == id);
+                        updatedAddress.IsDefault = false;
+                        _context.Update(updatedAddress);
+                        await _context.SaveChangesAsync();
+                    }
+                    else
+                    {
+                        billingAddress.User = user;
+                        _context.Update(billingAddress);
+                        await _context.SaveChangesAsync();
+                    }
                 }
                 catch (DbUpdateConcurrencyException)
                 {

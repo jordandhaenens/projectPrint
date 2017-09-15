@@ -71,10 +71,10 @@ namespace ProjectPrintDos.Controllers
 
             if (ModelState.IsValid)
             {
-                if (paymentType.IsPrimary == true)
+                // Check DB for primary PaymentType and set to false if one exists
+                PaymentType formerPrimaryPaymentType = await _context.PaymentType.SingleOrDefaultAsync(pt => pt.IsPrimary == true);
+                if (paymentType.IsPrimary == true && formerPrimaryPaymentType != null)
                 {
-                    // Check DB for primary PaymentType and set to false
-                    PaymentType formerPrimaryPaymentType = await _context.PaymentType.SingleOrDefaultAsync(pt => pt.IsPrimary == true);
                     formerPrimaryPaymentType.IsPrimary = false;
                     _context.Update(formerPrimaryPaymentType);
 
@@ -135,10 +135,10 @@ namespace ProjectPrintDos.Controllers
             {
                 try
                 {
-                    if (paymentType.IsPrimary == true)
+                    // Check DB for primary PaymentType and set to false if one exists
+                    PaymentType formerPrimaryPaymentType = await _context.PaymentType.SingleOrDefaultAsync(pt => pt.IsPrimary == true);
+                    if (paymentType.IsPrimary == true && formerPrimaryPaymentType != null)
                     {
-                        // Check DB for primary PaymentType and set to false
-                        PaymentType formerPrimaryPaymentType = await _context.PaymentType.SingleOrDefaultAsync(pt => pt.IsPrimary == true);
                         formerPrimaryPaymentType.IsPrimary = false;
                         _context.Update(formerPrimaryPaymentType);
 

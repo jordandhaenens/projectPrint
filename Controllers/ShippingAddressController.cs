@@ -30,6 +30,7 @@ namespace ProjectPrintDos.Controllers
             return View(await _context.ShippingAddress.ToListAsync());
         }
 
+        // This action is modified by Jordan Dhaenens to restrict access to address details if User is not owner
         // GET: ShippingAddress/Details/5
         public async Task<IActionResult> Details(int? id)
         {
@@ -37,9 +38,10 @@ namespace ProjectPrintDos.Controllers
             {
                 return NotFound();
             }
+            ApplicationUser user = await _userManager.GetUserAsync(User);
 
             var shippingAddress = await _context.ShippingAddress
-                .SingleOrDefaultAsync(m => m.ShippingAddressID == id);
+                .SingleOrDefaultAsync(m => m.ShippingAddressID == id && m.User == user);
             if (shippingAddress == null)
             {
                 return NotFound();
@@ -67,10 +69,25 @@ namespace ProjectPrintDos.Controllers
 
             if (ModelState.IsValid)
             {
-                shippingAddress.User = user;
-                _context.Add(shippingAddress);
-                await _context.SaveChangesAsync();
-                return RedirectToAction("GetAddresses", "Manage");
+                // Check DB for default ShippingAddress and set to false
+                ShippingAddress formerDefaultShippingAddress = await _context.ShippingAddress.SingleOrDefaultAsync(sa => sa.IsDefault == true);
+                if (shippingAddress.IsDefault == true && formerDefaultShippingAddress != null)
+                {
+                    formerDefaultShippingAddress.IsDefault = false;
+                    _context.Update(formerDefaultShippingAddress);
+
+                    shippingAddress.User = user;
+                    _context.Add(shippingAddress);
+                    await _context.SaveChangesAsync();
+                    return RedirectToAction("GetAddresses", "Manage");
+                }
+                else
+                {
+                    shippingAddress.User = user;
+                    _context.Add(shippingAddress);
+                    await _context.SaveChangesAsync();
+                    return RedirectToAction("GetAddresses", "Manage");
+                }
             }
             return View(shippingAddress);
         }
@@ -82,8 +99,9 @@ namespace ProjectPrintDos.Controllers
             {
                 return NotFound();
             }
+            ApplicationUser user = await _userManager.GetUserAsync(User);
 
-            var shippingAddress = await _context.ShippingAddress.SingleOrDefaultAsync(m => m.ShippingAddressID == id);
+            var shippingAddress = await _context.ShippingAddress.SingleOrDefaultAsync(m => m.ShippingAddressID == id && m.User == user);
             if (shippingAddress == null)
             {
                 return NotFound();
@@ -110,9 +128,31 @@ namespace ProjectPrintDos.Controllers
             {
                 try
                 {
-                    shippingAddress.User = user;
-                    _context.Update(shippingAddress);
-                    await _context.SaveChangesAsync();
+                    // Check DB for default ShippingAddress and set to false if one exists
+                    ShippingAddress formerDefaultShippingAddress = await _context.ShippingAddress.SingleOrDefaultAsync(sa => sa.IsDefault == true);
+                    if (shippingAddress.IsDefault == true && formerDefaultShippingAddress != null)
+                    {
+                        formerDefaultShippingAddress.IsDefault = false;
+                        _context.Update(formerDefaultShippingAddress);
+
+                        shippingAddress.User = user;
+                        _context.Update(shippingAddress);
+                        await _context.SaveChangesAsync();
+                    }
+                    // User is changing the current IsDefault address to false
+                    else if (shippingAddress.IsDefault == false && formerDefaultShippingAddress.ShippingAddressID == id)
+                    {
+                        ShippingAddress updatedAddress = _context.ShippingAddress.SingleOrDefault(ba => ba.ShippingAddressID == id);
+                        updatedAddress.IsDefault = false;
+                        _context.Update(updatedAddress);
+                        await _context.SaveChangesAsync();
+                    }
+                    else
+                    {
+                        shippingAddress.User = user;
+                        _context.Update(shippingAddress);
+                        await _context.SaveChangesAsync();
+                    }
                 }
                 catch (DbUpdateConcurrencyException)
                 {
