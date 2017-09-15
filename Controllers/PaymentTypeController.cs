@@ -31,6 +31,7 @@ namespace ProjectPrintDos.Controllers
             return View(await _context.PaymentType.ToListAsync());
         }
 
+        // This action was modified to ensure that the current User can only access their PaymentTypes
         // GET: PaymentType/Details/5
         public async Task<IActionResult> Details(int? id)
         {
@@ -38,9 +39,10 @@ namespace ProjectPrintDos.Controllers
             {
                 return NotFound();
             }
+            ApplicationUser user = await _userManager.GetUserAsync(User);
 
             var paymentType = await _context.PaymentType
-                .SingleOrDefaultAsync(m => m.PaymentTypeID == id);
+                .SingleOrDefaultAsync(m => m.PaymentTypeID == id && m.User == user);
             if (paymentType == null)
             {
                 return NotFound();
@@ -69,16 +71,32 @@ namespace ProjectPrintDos.Controllers
 
             if (ModelState.IsValid)
             {
-                paymentType.IsActive = 1;
-                paymentType.User = user;
-                _context.Add(paymentType);
-                await _context.SaveChangesAsync();
-                return RedirectToAction("PaymentTypes", "Manage");
+                if (paymentType.IsPrimary == true)
+                {
+                    // Check DB for primary PaymentType and set to false
+                    PaymentType formerPrimaryPaymentType = await _context.PaymentType.SingleOrDefaultAsync(pt => pt.IsPrimary == true);
+                    formerPrimaryPaymentType.IsPrimary = false;
+                    _context.Update(formerPrimaryPaymentType);
+
+                    paymentType.IsActive = true;
+                    paymentType.User = user;
+                    _context.Add(paymentType);
+                    await _context.SaveChangesAsync();
+                    return RedirectToAction("PaymentTypes", "Manage");
+                }
+                else
+                {
+                    paymentType.IsActive = true;
+                    paymentType.User = user;
+                    _context.Add(paymentType);
+                    await _context.SaveChangesAsync();
+                    return RedirectToAction("PaymentTypes", "Manage");
+                }
             }
             return View(paymentType);
         }
 
-        // Jordan Dhaenens modified this action to filter out inactive PaymentTypes
+        // Jordan Dhaenens modified this action to filter out inactive PaymentTypes and ensure ownership
         // GET: PaymentType/Edit/5
         public async Task<IActionResult> Edit(int? id)
         {
@@ -86,9 +104,10 @@ namespace ProjectPrintDos.Controllers
             {
                 return NotFound();
             }
+            ApplicationUser user = await _userManager.GetUserAsync(User);
 
-            var paymentType = await _context.PaymentType.SingleOrDefaultAsync(m => m.PaymentTypeID == id);
-            if (paymentType == null || paymentType.IsActive != 1)
+            var paymentType = await _context.PaymentType.SingleOrDefaultAsync(m => m.PaymentTypeID == id && m.User == user);
+            if (paymentType == null || paymentType.IsActive != true)
             {
                 return NotFound();
             }
@@ -116,10 +135,25 @@ namespace ProjectPrintDos.Controllers
             {
                 try
                 {
-                    paymentType.IsActive = 1;
-                    paymentType.User = user;
-                    _context.Update(paymentType);
-                    await _context.SaveChangesAsync();
+                    if (paymentType.IsPrimary == true)
+                    {
+                        // Check DB for primary PaymentType and set to false
+                        PaymentType formerPrimaryPaymentType = await _context.PaymentType.SingleOrDefaultAsync(pt => pt.IsPrimary == true);
+                        formerPrimaryPaymentType.IsPrimary = false;
+                        _context.Update(formerPrimaryPaymentType);
+
+                        paymentType.IsActive = true;
+                        paymentType.User = user;
+                        _context.Update(paymentType);
+                        await _context.SaveChangesAsync();
+                    }
+                    else
+                    {
+                        paymentType.IsActive = true;
+                        paymentType.User = user;
+                        _context.Update(paymentType);
+                        await _context.SaveChangesAsync();
+                    }
                 }
                 catch (DbUpdateConcurrencyException)
                 {
@@ -147,7 +181,7 @@ namespace ProjectPrintDos.Controllers
 
             var paymentType = await _context.PaymentType
                 .SingleOrDefaultAsync(m => m.PaymentTypeID == id);
-            if (paymentType == null || paymentType.IsActive != 1)
+            if (paymentType == null || paymentType.IsActive != true)
             {
                 return NotFound();
             }
@@ -172,7 +206,7 @@ namespace ProjectPrintDos.Controllers
                 try
                 {
                     // ?Does modelVM.PaymentType have a User? Check once the ability to create orders is in place
-                    modelVM.PaymentType.IsActive = 0;
+                    modelVM.PaymentType.IsActive = false;
                     _context.Update(modelVM.PaymentType);
                 }
                 catch (DbUpdateConcurrencyException)

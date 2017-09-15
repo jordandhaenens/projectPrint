@@ -26,7 +26,7 @@ namespace ProjectPrintDos.Models
         [RegularExpression(@"^\d{5}(-\d{4})?$", ErrorMessage = "Invalid Zip Code")]
         public int ZipCode { get; set; }
 
-        public int ? IsDefault { get; set; }
+        public bool ? IsDefault { get; set; }
         
         [Required]
         public ApplicationUser User { get; set; }

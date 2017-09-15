@@ -192,7 +192,7 @@ namespace ProjectPrintDos.Migrations
                     b.Property<string>("City")
                         .IsRequired();
 
-                    b.Property<int?>("IsDefault");
+                    b.Property<bool?>("IsDefault");
 
                     b.Property<string>("State")
                         .IsRequired();
@@ -267,7 +267,7 @@ namespace ProjectPrintDos.Migrations
 
                     b.Property<int?>("BillingAddressID");
 
-                    b.Property<int?>("IsFulfilled");
+                    b.Property<bool?>("IsFulfilled");
 
                     b.Property<int?>("PaymentTypeID");
 
@@ -298,9 +298,9 @@ namespace ProjectPrintDos.Migrations
                         .IsRequired()
                         .HasMaxLength(20);
 
-                    b.Property<int>("IsActive");
+                    b.Property<bool>("IsActive");
 
-                    b.Property<int>("IsPrimary");
+                    b.Property<bool>("IsPrimary");
 
                     b.Property<string>("Type")
                         .IsRequired()
@@ -365,7 +365,7 @@ namespace ProjectPrintDos.Migrations
                     b.Property<string>("City")
                         .IsRequired();
 
-                    b.Property<int?>("IsDefault");
+                    b.Property<bool?>("IsDefault");
 
                     b.Property<string>("State")
                         .IsRequired();

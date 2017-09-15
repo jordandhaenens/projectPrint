@@ -4,7 +4,7 @@ using System.Collections.Generic;
 
 namespace ProjectPrintDos.Migrations
 {
-    public partial class Initial : Migration
+    public partial class initial : Migration
     {
         protected override void Up(MigrationBuilder migrationBuilder)
         {
@@ -211,7 +211,7 @@ namespace ProjectPrintDos.Migrations
                     BillingAddressID = table.Column<int>(type: "INTEGER", nullable: false)
                         .Annotation("Sqlite:Autoincrement", true),
                     City = table.Column<string>(type: "TEXT", nullable: false),
-                    IsDefault = table.Column<int>(type: "INTEGER", nullable: true),
+                    IsDefault = table.Column<bool>(type: "INTEGER", nullable: true),
                     State = table.Column<string>(type: "TEXT", nullable: false),
                     Street = table.Column<string>(type: "TEXT", nullable: false),
                     Unit = table.Column<int>(type: "INTEGER", nullable: true),
@@ -236,8 +236,8 @@ namespace ProjectPrintDos.Migrations
                     PaymentTypeID = table.Column<int>(type: "INTEGER", nullable: false)
                         .Annotation("Sqlite:Autoincrement", true),
                     AccountNumber = table.Column<string>(type: "TEXT", maxLength: 20, nullable: false),
-                    IsActive = table.Column<int>(type: "INTEGER", nullable: false),
-                    IsPrimary = table.Column<int>(type: "INTEGER", nullable: false),
+                    IsActive = table.Column<bool>(type: "INTEGER", nullable: false),
+                    IsPrimary = table.Column<bool>(type: "INTEGER", nullable: false),
                     Type = table.Column<string>(type: "TEXT", maxLength: 20, nullable: false),
                     UserId = table.Column<string>(type: "TEXT", nullable: false)
                 },
@@ -259,7 +259,7 @@ namespace ProjectPrintDos.Migrations
                     ShippingAddressID = table.Column<int>(type: "INTEGER", nullable: false)
                         .Annotation("Sqlite:Autoincrement", true),
                     City = table.Column<string>(type: "TEXT", nullable: false),
-                    IsDefault = table.Column<int>(type: "INTEGER", nullable: true),
+                    IsDefault = table.Column<bool>(type: "INTEGER", nullable: true),
                     State = table.Column<string>(type: "TEXT", nullable: false),
                     Street = table.Column<string>(type: "TEXT", nullable: false),
                     Unit = table.Column<int>(type: "INTEGER", nullable: true),
@@ -284,7 +284,7 @@ namespace ProjectPrintDos.Migrations
                     OrderID = table.Column<int>(type: "INTEGER", nullable: false)
                         .Annotation("Sqlite:Autoincrement", true),
                     BillingAddressID = table.Column<int>(type: "INTEGER", nullable: true),
-                    IsFulfilled = table.Column<int>(type: "INTEGER", nullable: true),
+                    IsFulfilled = table.Column<bool>(type: "INTEGER", nullable: true),
                     PaymentTypeID = table.Column<int>(type: "INTEGER", nullable: true),
                     ShippingAddressID = table.Column<int>(type: "INTEGER", nullable: true),
                     UserId = table.Column<string>(type: "TEXT", nullable: false)

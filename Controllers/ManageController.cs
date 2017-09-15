@@ -138,7 +138,7 @@ namespace ProjectPrintDos.Controllers
         // GET: /Manage/Inventory
         [HttpGet]
         [Authorize(Roles = "Administrator")]
-        public async Task<IActionResult> Inventory()
+        public IActionResult Inventory()
         {
             ViewBag.Title = "Inventory Overview";
 
