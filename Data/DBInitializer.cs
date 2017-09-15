@@ -48,6 +48,7 @@ namespace ProjectPrintDos.Data
                 user.PasswordHash = passwordHash.HashPassword(user, "Admin8*");
                 await userstore.CreateAsync(user);
                 await userstore.AddToRoleAsync(user, "ADMINISTRATOR");
+                await context.SaveChangesAsync();
             }
 
             if (!context.ApplicationUser.Any(u => u.FirstName == "test"))
@@ -68,6 +69,7 @@ namespace ProjectPrintDos.Data
                 user.PasswordHash = passwordHash.HashPassword(user, "test");
                 await userstore.CreateAsync(user);
                 await userstore.AddToRoleAsync(user, "USER");
+                await context.SaveChangesAsync();
                 }
         }
     }

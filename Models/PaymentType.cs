@@ -17,9 +17,9 @@ namespace ProjectPrintDos.Models
         [StringLength(20)]
         public string AccountNumber { get; set; }
         [Required]
-        public int IsActive { get; set; }
+        public bool IsActive { get; set; }
         [Required]
-        public int IsPrimary { get; set; }
+        public bool IsPrimary { get; set; }
 
         // ForeignKey
         [Required]

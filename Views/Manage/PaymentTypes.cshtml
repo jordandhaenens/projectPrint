@@ -9,7 +9,7 @@
                 <h4>Payment Options</h4>
             </th>
             <th>
-                <h4>Is Default</h4>
+                <h4></h4>
             </th>
             <th><a class="btn btn-primary" asp-controller="PaymentType" asp-action="Create">Add New Payment Type</a></th>
         </tr>
@@ -19,15 +19,22 @@
         {
             <tr>
                 <td>
-                    <a asp-controller="" asp-action="Details" asp-route-id="@item.PaymentTypeID">
+                    <a asp-controller="PaymentType" asp-action="Details" asp-route-id="@item.PaymentTypeID">
                         <p>
-                            @item.Type <br>
+                            Type @item.Type <br>
                             @item.AccountNumber
                         </p>    
                     </a>
                 </td>
                 <td>
-                    @Html.DisplayFor(modelItem => item.IsPrimary)
+                    @if (@item.IsPrimary)
+                    {
+                        <p>Your Default Payment Option</p>
+                    }
+                    else
+                    {
+                        <p></p>
+                    }
                 </td>
                 <td>
                     <a asp-controller="PaymentType" asp-action="Edit" asp-route-id="@item.PaymentTypeID">Edit</a> | 

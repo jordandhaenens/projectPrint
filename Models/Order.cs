@@ -10,7 +10,7 @@ namespace ProjectPrintDos.Models
     {
         [Key]
         public int OrderID { get; set; }
-        public int ? IsFulfilled { get; set; } 
+        public bool ? IsFulfilled { get; set; } 
         [Required]
         public ApplicationUser User { get; set; }
         

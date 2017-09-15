@@ -14,7 +14,7 @@ namespace ProjectPrintDos.Models.ManageViewModels
 
         public GetPaymentTypesVM(ApplicationDbContext ctx, ApplicationUser user)
         {
-            UserPaymentTypes = ctx.PaymentType.Where(pt => pt.User == user && pt.IsActive == 1).ToList();
+            UserPaymentTypes = ctx.PaymentType.Where(pt => pt.User == user && pt.IsActive == true).ToList();
         }
     }
 }
