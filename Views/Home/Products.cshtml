@@ -2,15 +2,16 @@
 
 <div>
     <h4>Products</h4>
+    <hr>
 </div>
 
-<div class="container-fluid">
 <!-- Product Cards -->
+<div class="container-fluid">
 
     <div class="row">
         @foreach (var item in Model.ProductTypes)
         {
-            <a asp-controller="ProductType" asp-action="ProductDetail" asp-route="">
+            <a asp-controller="ProductType" asp-action="ProductDetail" asp-route-id="@item.ProductTypeID">
                 <div class="col-sm-6 col-md-4">
                     <div class="thumbnail">
                         <img src="#" alt="...">
