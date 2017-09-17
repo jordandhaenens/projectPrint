@@ -9,7 +9,7 @@
                 <h4>Billing Addresses</h4>
             </th>
             <th>
-                <h4>Is Default</h4>
+                <h4></h4>
             </th>
             <th><a class="btn btn-primary" asp-controller="BillingAddress" asp-action="Create">Add New Billing Address</a></th>
         </tr>
@@ -33,7 +33,14 @@
                     </a>
                 </td>
                 <td>
-                    @Html.DisplayFor(modelItem => item.IsDefault)
+                    @if (item.IsDefault)
+                    {
+                        <p>Your Default Billing Address</p>
+                    }
+                    else
+                    {
+                        <p></p>
+                    }
                 </td>
                 <td>
                     <a asp-controller="BillingAddress" asp-action="Edit" asp-route-id="@item.BillingAddressID">Edit</a> | 
@@ -52,7 +59,7 @@
                 <h4>Shipping Addresses</h4>
             </th>
             <th>
-                <h4>Is Default</h4>
+                <h4></h4>
             </th>
             <th><a class="btn btn-primary" asp-controller="ShippingAddress" asp-action="Create">Add New Shipping Address</a></th>
         </tr>
@@ -76,7 +83,14 @@
                     </a>
                 </td>
                 <td>
-                    @Html.DisplayFor(modelItem => item.IsDefault)
+                    @if (item.IsDefault)
+                    {
+                        <p>Your Default Shipping Address</p>
+                    }
+                    else
+                    {
+                        <p></p>
+                    }
                 </td>
                 <td>
                     <a asp-controller="ShippingAddress" asp-action="Edit" asp-route-id="@item.ShippingAddressID">Edit</a> | 
