@@ -61,14 +61,12 @@ namespace ProjectPrintDos.Controllers
         {
             ApplicationUser user = await _userManager.GetUserAsync(User);
             // Build CompositeProduct
-            CompositeProduct compositeProduct = new CompositeProduct()
+            CompositeProduct compositeProduct = new CompositeProduct(){ProductTypeID = productTypeID, DateCreated = DateTime.Now};
+            if (inkID != 0 && screenID != 0)
             {
-                ProductTypeID = productTypeID,
-                InkID = inkID,
-                ScreenID = screenID,
-                DateCreated = DateTime.Now
-                // needs OrderID
-            };
+                compositeProduct.InkID = inkID;
+                compositeProduct.ScreenID = screenID;
+            }
 
             // Check for open User order. If none, create new Order
             Order order = await _context.Order.SingleOrDefaultAsync(o => o.PaymentTypeID == null && o.User == user);
@@ -81,11 +79,12 @@ namespace ProjectPrintDos.Controllers
                 };
                 _context.Add(newOrder);
                 await _context.SaveChangesAsync();
-
+                // Add OrderID to CompositeProduct
                 compositeProduct.OrderID = newOrder.OrderID;
             }
             else
             {
+                // Add OrderID to CompositeProduct
                 compositeProduct.OrderID = order.OrderID;
             }
 
