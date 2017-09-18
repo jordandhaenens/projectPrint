@@ -9,6 +9,7 @@ using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
 using ProjectPrintDos.Data;
 using ProjectPrintDos.Models;
+using ProjectPrintDos.Models.ProductTypeViewModels;
 
 namespace ProjectPrintDos.Controllers
 {
@@ -55,8 +56,21 @@ namespace ProjectPrintDos.Controllers
         // GET: ProductType/ProductDetail/4
         public async Task<IActionResult> ProductDetail(int? id)
         {
+            if (id == null)
+            {
+                return NotFound();
+            }
+
             ApplicationUser user = await _userManager.GetUserAsync(User);
-            return View();
+            ProductType productType = await _context.ProductType.SingleOrDefaultAsync(pt => pt.ProductTypeID == id && pt.Quantity > 1);
+            if (productType == null)
+            {
+                return NotFound();
+            }
+
+            ProductBuilderVM model = new ProductBuilderVM(_context, productType);
+
+            return View(model);
         }
 
 

@@ -16,7 +16,7 @@ namespace ProjectPrintDos.Models.HomeViewModels
 
         public ProductTypesVM(ApplicationDbContext ctx)
         {
-            ProductTypes = ctx.ProductType.Where(pt => pt.Quantity != 0);
+            ProductTypes = ctx.ProductType.Where(pt => pt.Quantity > 1);
         }
     }
 }
