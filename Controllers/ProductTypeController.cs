@@ -69,6 +69,7 @@ namespace ProjectPrintDos.Controllers
             }
 
             ProductBuilderVM model = new ProductBuilderVM(_context, productType);
+            
 
             return View(model);
         }

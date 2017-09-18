@@ -8,51 +8,68 @@
         <hr>
     </div>
 
-    <form class="form-horizontal">
-    <!-- Screens and Inks Cards -->
+    <form asp-controller="Order" asp-action="BuildProductAddToOrder">
+        <div class="form-horizontal">
+        <!-- Screens and Inks Cards -->
 
-        <div class="form-group">
-            @foreach (var item in Model.Screens)
-            {
-                <label asp-for=""
-                <!-- Make this div a button that captures a value -->
+            <div class="form-group">
+                @foreach (var item in Model.Screens)
+                {
                     <div class="col-sm-6 col-md-3">
                         <div class="thumbnail">
                             <img src="#" alt="...">
                             <div class="caption">
-                                <h5>@item.Title</h5>
-                                <!-- <p><a href="#" class="btn btn-primary" role="button">Button</a> <a href="#" class="btn btn-default" role="button">Button</a></p> -->
+                                <label asp-for="@item.Title">@item.Title</label>
+                                <input type="radio" name="screenID" class="form-control" value="@item.ScreenID">
+                                <span asp-validation-for="@item.ScreenID" class="text-danger"></span>
                             </div>
                         </div>
-                    </div>
-                
-            }
-        </div>
-        
-        <div class="form-group">
-            @foreach (var item in Model.Inks)
-            {
-                <!-- Make this div a button that captures a value -->
-                <div>
+                    </div>                    
+                }
+            </div>
+            
+            <div class="form-group">
+                @foreach (var item in Model.Inks)
+                {
                     <div class="col-sm-4 col-md-1">
                         <div class="thumbnail">
                             <img src="#" alt="...">
                             <div class="caption">
-                                <h5>@item.Title</h5>
+                                <label asp-for="@item.Title">@item.Title</label>
+                                <input type="radio" name="inkID" class="form-control" value="@item.InkID">
+                                <span asp-validation-for="@item.InkID" class="text-danger"></span>
                             </div>
                         </div>
                     </div>
-                </div>
+                }
+            </div>
 
+            <div class="form-group">
+                <div class="col-sm-12 col-md-6">
+                    <div class="thumbnail">
+                        <img src="#" alt="...">
+                        <div class="caption">
+                            <label asp-for="@Model.ProductType.Title"></label>
+                            <p>
+                                @Model.ProductType.Title <br>
+                                @Model.ProductType.BaseColor
+                            </p>
+                            <input type="radio" name="productTypeID" checked class="form-control hidden" value="@Model.ProductType.ProductTypeID">
+                            <span asp-validation-for="@Model.ProductType.ProductTypeID" class="text-danger"></span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            @if (SignInManager.IsSignedIn(User))
+            {
+                <div class="form-group">
+                    <div class="col-md-offset-2 col-md-10">
+                        <input type="submit" value="Create" class="btn btn-default"/>
+                    </div>
+                </div>
             }
         </div>
-
-        @if (SignInManager.IsSignedIn(User))
-        {
-            <div class="form-group">
-                <p>Add to cart button</p>
-            </div>
-        }
     </form>
 
 </div>

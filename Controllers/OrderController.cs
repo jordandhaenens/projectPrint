@@ -2,6 +2,8 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
@@ -10,13 +12,16 @@ using ProjectPrintDos.Models;
 
 namespace ProjectPrintDos.Controllers
 {
+    [Authorize]
     public class OrderController : Controller
     {
         private readonly ApplicationDbContext _context;
+        private readonly UserManager<ApplicationUser> _userManager;
 
-        public OrderController(ApplicationDbContext context)
+        public OrderController(ApplicationDbContext context, UserManager<ApplicationUser> userManager)
         {
             _context = context;    
+            _userManager = userManager;
         }
 
         // GET: Order
@@ -46,6 +51,50 @@ namespace ProjectPrintDos.Controllers
 
             return View(order);
         }
+
+        // This action is authored by Jordan Dhaenens
+        // This action creates a CompositeProduct from the User input and adds it to the User open order. If User doesn't have an open order, an open order will be created and the CompositeProduct will be added to it. 
+        // POST: Order/BuildProductAddToOrder
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public async Task<IActionResult> BuildProductAddToOrder(int inkID, int screenID, int productTypeID)
+        {
+            ApplicationUser user = await _userManager.GetUserAsync(User);
+            // Build CompositeProduct
+            CompositeProduct compositeProduct = new CompositeProduct()
+            {
+                ProductTypeID = productTypeID,
+                InkID = inkID,
+                ScreenID = screenID,
+                DateCreated = DateTime.Now
+                // needs OrderID
+            };
+
+            // Check for open User order. If none, create new Order
+            Order order = await _context.Order.SingleOrDefaultAsync(o => o.PaymentTypeID == null && o.User == user);
+            if (order == null)
+            {
+                // Create new Order
+                Order newOrder = new Order()
+                {
+                    User = user,
+                };
+                _context.Add(newOrder);
+                await _context.SaveChangesAsync();
+
+                compositeProduct.OrderID = newOrder.OrderID;
+            }
+            else
+            {
+                compositeProduct.OrderID = order.OrderID;
+            }
+
+            _context.Add(compositeProduct);
+            await _context.SaveChangesAsync();
+
+            return RedirectToAction("Index", "Home");
+        }
+
 
         // GET: Order/Create
         public IActionResult Create()
