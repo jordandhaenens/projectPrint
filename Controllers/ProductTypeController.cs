@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
@@ -11,23 +12,27 @@ using ProjectPrintDos.Models;
 
 namespace ProjectPrintDos.Controllers
 {
-    [Authorize(Roles = "Administrator")]
     public class ProductTypeController : Controller
     {
         private readonly ApplicationDbContext _context;
+        private readonly UserManager<ApplicationUser> _userManager;
 
-        public ProductTypeController(ApplicationDbContext context)
+        public ProductTypeController(ApplicationDbContext context, UserManager<ApplicationUser> userManager)
         {
             _context = context;    
+            _userManager = userManager;
         }
 
+        // This action was modified by Jordan Dhaenens
         // GET: ProductType
+        [Authorize(Roles = "Administrator")]
         public async Task<IActionResult> Index()
         {
             return View(await _context.ProductType.OrderBy(pt => pt.BaseColor).ToListAsync());
         }
 
         // GET: ProductType/Details/5
+        [Authorize(Roles = "Administrator")]
         public async Task<IActionResult> Details(int? id)
         {
             if (id == null)
@@ -45,15 +50,28 @@ namespace ProjectPrintDos.Controllers
             return View(productType);
         }
 
+        // This action was authored by Jordan Dhaenens
+        // This action returns the Customer facing ProductType details
+        // GET: ProductType/ProductDetail/4
+        public async Task<IActionResult> ProductDetail(int? id)
+        {
+            ApplicationUser user = await _userManager.GetUserAsync(User);
+            return View();
+        }
+
+
         // GET: ProductType/Create
+        [Authorize(Roles = "Administrator")]
         public IActionResult Create()
         {
             return View();
         }
 
+        
         // POST: ProductType/Create
         // To protect from overposting attacks, please enable the specific properties you want to bind to, for 
         // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
+        [Authorize(Roles = "Administrator")]
         [HttpPost]
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> Create([Bind("ProductTypeID,Title,BaseColor,Cost,Price,Quantity")] ProductType productType)
@@ -68,6 +86,7 @@ namespace ProjectPrintDos.Controllers
         }
 
         // GET: ProductType/Edit/5
+        [Authorize(Roles = "Administrator")]
         public async Task<IActionResult> Edit(int? id)
         {
             if (id == null)
@@ -86,6 +105,7 @@ namespace ProjectPrintDos.Controllers
         // POST: ProductType/Edit/5
         // To protect from overposting attacks, please enable the specific properties you want to bind to, for 
         // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
+        [Authorize(Roles = "Administrator")]
         [HttpPost]
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> Edit(int id, [Bind("ProductTypeID,Title,BaseColor,Cost,Price,Quantity")] ProductType productType)
@@ -119,6 +139,7 @@ namespace ProjectPrintDos.Controllers
         }
 
         // GET: ProductType/Delete/5
+        [Authorize(Roles = "Administrator")]
         public async Task<IActionResult> Delete(int? id)
         {
             if (id == null)
@@ -137,6 +158,7 @@ namespace ProjectPrintDos.Controllers
         }
 
         // POST: ProductType/Delete/5
+        [Authorize(Roles = "Administrator")]
         [HttpPost, ActionName("Delete")]
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> DeleteConfirmed(int id)

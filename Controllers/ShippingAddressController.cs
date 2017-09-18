@@ -25,10 +25,10 @@ namespace ProjectPrintDos.Controllers
         }
 
         // GET: ShippingAddress
-        public async Task<IActionResult> Index()
-        {
-            return View(await _context.ShippingAddress.ToListAsync());
-        }
+        // public async Task<IActionResult> Index()
+        // {
+        //     return View(await _context.ShippingAddress.ToListAsync());
+        // }
 
         // This action is modified by Jordan Dhaenens to restrict access to address details if User is not owner
         // GET: ShippingAddress/Details/5

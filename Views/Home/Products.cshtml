@@ -1,0 +1,32 @@
+@model ProjectPrintDos.Models.HomeViewModels.ProductTypesVM
+
+<div>
+    <h4>Products</h4>
+    <hr>
+</div>
+
+<!-- Product Cards -->
+<div class="container-fluid">
+
+    <div class="row">
+        @foreach (var item in Model.ProductTypes)
+        {
+            <a asp-controller="ProductType" asp-action="ProductDetail" asp-route-id="@item.ProductTypeID">
+                <div class="col-sm-6 col-md-4">
+                    <div class="thumbnail">
+                        <img src="#" alt="...">
+                        <div class="caption">
+                            <h5>The classic t-shirt</h5><!-- Make this adaptable by adding a "Description" property to the ProductTypes class -->
+                            <p>
+                                @item.Title <br>
+                                @item.BaseColor
+                            </p>
+                            <!-- <p><a href="#" class="btn btn-primary" role="button">Button</a> <a href="#" class="btn btn-default" role="button">Button</a></p> -->
+                        </div>
+                    </div>
+                </div>
+            </a>
+        }
+    </div>
+
+</div>
