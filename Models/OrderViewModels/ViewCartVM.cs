@@ -13,6 +13,7 @@ namespace ProjectPrintDos.Models.OrderViewModels
     {
         // All CompositeProducts on the selected order
         public IEnumerable<CompositeProduct> userProducts { get; set; }
+        public double ? ShoppingCartTotal { get; set; }
 
         public ViewCartVM(ApplicationDbContext ctx, Order order)
         {
@@ -22,6 +23,13 @@ namespace ProjectPrintDos.Models.OrderViewModels
                 .Include(cp => cp.Ink)
                 .Include(cp => cp.Screen)
                 .Where(cp => cp.OrderID == order.OrderID);
+
+            // Get the total price of all items in cart 
+            ShoppingCartTotal = userProducts.Sum(cp => cp.Price);
+            // foreach (var item in userProducts)
+            // {
+            //     ShoppingCartTotal += item.Price;
+            // }
         }
     }
 }

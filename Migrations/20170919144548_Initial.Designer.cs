@@ -11,8 +11,8 @@ using System;
 namespace ProjectPrintDos.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    [Migration("20170915151642_initial")]
-    partial class initial
+    [Migration("20170919144548_Initial")]
+    partial class Initial
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
@@ -193,7 +193,7 @@ namespace ProjectPrintDos.Migrations
                     b.Property<string>("City")
                         .IsRequired();
 
-                    b.Property<bool?>("IsDefault");
+                    b.Property<bool>("IsDefault");
 
                     b.Property<string>("State")
                         .IsRequired();
@@ -225,6 +225,8 @@ namespace ProjectPrintDos.Migrations
                     b.Property<int?>("InkID");
 
                     b.Property<int?>("OrderID");
+
+                    b.Property<double?>("Price");
 
                     b.Property<int?>("ProductTypeID");
 
@@ -366,7 +368,7 @@ namespace ProjectPrintDos.Migrations
                     b.Property<string>("City")
                         .IsRequired();
 
-                    b.Property<bool?>("IsDefault");
+                    b.Property<bool>("IsDefault");
 
                     b.Property<string>("State")
                         .IsRequired();

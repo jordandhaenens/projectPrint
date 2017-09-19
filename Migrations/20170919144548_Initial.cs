@@ -4,7 +4,7 @@ using System.Collections.Generic;
 
 namespace ProjectPrintDos.Migrations
 {
-    public partial class initial : Migration
+    public partial class Initial : Migration
     {
         protected override void Up(MigrationBuilder migrationBuilder)
         {
@@ -211,7 +211,7 @@ namespace ProjectPrintDos.Migrations
                     BillingAddressID = table.Column<int>(type: "INTEGER", nullable: false)
                         .Annotation("Sqlite:Autoincrement", true),
                     City = table.Column<string>(type: "TEXT", nullable: false),
-                    IsDefault = table.Column<bool>(type: "INTEGER", nullable: true),
+                    IsDefault = table.Column<bool>(type: "INTEGER", nullable: false),
                     State = table.Column<string>(type: "TEXT", nullable: false),
                     Street = table.Column<string>(type: "TEXT", nullable: false),
                     Unit = table.Column<int>(type: "INTEGER", nullable: true),
@@ -259,7 +259,7 @@ namespace ProjectPrintDos.Migrations
                     ShippingAddressID = table.Column<int>(type: "INTEGER", nullable: false)
                         .Annotation("Sqlite:Autoincrement", true),
                     City = table.Column<string>(type: "TEXT", nullable: false),
-                    IsDefault = table.Column<bool>(type: "INTEGER", nullable: true),
+                    IsDefault = table.Column<bool>(type: "INTEGER", nullable: false),
                     State = table.Column<string>(type: "TEXT", nullable: false),
                     Street = table.Column<string>(type: "TEXT", nullable: false),
                     Unit = table.Column<int>(type: "INTEGER", nullable: true),
@@ -327,6 +327,7 @@ namespace ProjectPrintDos.Migrations
                     DateCreated = table.Column<DateTime>(type: "TEXT", nullable: false),
                     InkID = table.Column<int>(type: "INTEGER", nullable: true),
                     OrderID = table.Column<int>(type: "INTEGER", nullable: true),
+                    Price = table.Column<double>(type: "REAL", nullable: false),
                     ProductTypeID = table.Column<int>(type: "INTEGER", nullable: true),
                     ScreenID = table.Column<int>(type: "INTEGER", nullable: true)
                 },

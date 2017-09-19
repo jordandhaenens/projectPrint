@@ -20,7 +20,7 @@
                 <td>
                     <a asp-controller="CompositeProduct" asp-action="Details" asp-route-id="@item.CompositeProductID">
                         <p>
-                            @item.ProductType.Title <br>
+                            @item.ProductType.Title-@item.ProductType.BaseColor <br>
                             @if (@item.Ink != null && @item.Screen != null)
                             {
                                 @item.Ink.Title <br>
@@ -30,15 +30,21 @@
                     </a>
                 </td>
                 <td>
-                    @if (@item.Ink != null && @item.Screen != null)
-                    {
-                        <p> $@(item.Ink.Price + item.Screen.Price)</p>
-                    }
+                    <p>$@item.Price</p>
                 </td>
                 <td>
-                    <a asp-controller="CompositeProduct" asp-action="Delete" asp-route-id="">Remove</a>
+                    <a asp-controller="CompositeProduct" asp-action="Delete" asp-route-id="@item.CompositeProductID">Remove</a>
                 </td>
             </tr>
         }
+        <tr>
+            <td class="col-sm-6 col-md-8"></td>
+            <td>
+                <p>$@Model.ShoppingCartTotal</p>
+            </td>
+            <td>
+                <a class="btn btn-default" asp-controller="#" asp-action="#">Close Order</a>
+            </td>
+        </tr>
     </tbody>
 </table>
