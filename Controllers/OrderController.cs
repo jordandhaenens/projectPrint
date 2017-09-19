@@ -91,7 +91,18 @@ namespace ProjectPrintDos.Controllers
             _context.Add(compositeProduct);
             await _context.SaveChangesAsync();
 
-            return RedirectToAction("Index", "Home");
+            return RedirectToAction("ViewCart", "Order");
+        }
+
+
+        // This action was authored by Jordan Dhaenens
+        // This action presents the User's shopping cart and it's CompositeProducts
+        // GET: Order/ViewCart
+        public async Task<IActionResult> ViewCart()
+        {
+            ApplicationUser user = await _userManager.GetUserAsync(User);
+
+            return View();
         }
 
 
