@@ -1,0 +1,38 @@
+@model ProjectPrintDos.Models.OrderViewModels.ViewCartVM
+
+
+<!-- Shopping Cart Table -->
+<table class="table">
+    <thead>
+        <tr>
+            <th>
+                <h4>Shopping Cart</h4>
+            </th>
+            <th>
+                <h4></h4>
+            </th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var item in Model.userProducts)
+        {
+            <tr>
+                <td>
+                    <a asp-controller="#" asp-action="Details" asp-route-id="#">
+                        <p>
+                            @item.ProductType.Title <br>
+                            @if (@item.Ink != null && @item.Screen != null)
+                            {
+                                @item.Ink.Title <br>
+                                @item.Screen.Title
+                            }
+                        </p>    
+                    </a>
+                </td>
+                <td>
+                    <a asp-controller="#" asp-action="Delete" asp-route-id="">Remove</a>
+                </td>
+            </tr>
+        }
+    </tbody>
+</table>

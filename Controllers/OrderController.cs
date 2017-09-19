@@ -9,6 +9,7 @@ using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
 using ProjectPrintDos.Data;
 using ProjectPrintDos.Models;
+using ProjectPrintDos.Models.OrderViewModels;
 
 namespace ProjectPrintDos.Controllers
 {
@@ -101,8 +102,16 @@ namespace ProjectPrintDos.Controllers
         public async Task<IActionResult> ViewCart()
         {
             ApplicationUser user = await _userManager.GetUserAsync(User);
+            // fetch the User's open order
+            Order order = await _context.Order.Include(o => o.CompositeProduct).SingleOrDefaultAsync(o => o.PaymentTypeID == null && o.User == user);
+            // if (order == null)
+            // {
+            //     Order nullOrder = new Order();
 
-            return View();
+            // }
+            ViewCartVM model = new ViewCartVM(_context, order);
+
+            return View(model);
         }
 
 
