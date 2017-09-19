@@ -9,6 +9,7 @@ using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
 using ProjectPrintDos.Data;
 using ProjectPrintDos.Models;
+using ProjectPrintDos.Models.OrderViewModels;
 
 namespace ProjectPrintDos.Controllers
 {
@@ -60,12 +61,17 @@ namespace ProjectPrintDos.Controllers
         public async Task<IActionResult> BuildProductAddToOrder(int inkID, int screenID, int productTypeID)
         {
             ApplicationUser user = await _userManager.GetUserAsync(User);
+            Ink ink = await _context.Ink.SingleOrDefaultAsync(i => i.InkID == inkID);
+            Screen screen = await _context.Screen.SingleOrDefaultAsync(s => s.ScreenID == screenID);
+            ProductType productType = await _context.ProductType.SingleOrDefaultAsync(pt => pt.ProductTypeID == productTypeID);
+
             // Build CompositeProduct
-            CompositeProduct compositeProduct = new CompositeProduct(){ProductTypeID = productTypeID, DateCreated = DateTime.Now};
+            CompositeProduct compositeProduct = new CompositeProduct(){ProductTypeID = productTypeID, DateCreated = DateTime.Now, Price = productType.Price};
             if (inkID != 0 && screenID != 0)
             {
                 compositeProduct.InkID = inkID;
                 compositeProduct.ScreenID = screenID;
+                compositeProduct.Price += (ink.Price + screen.Price); 
             }
 
             // Check for open User order. If none, create new Order
@@ -101,8 +107,11 @@ namespace ProjectPrintDos.Controllers
         public async Task<IActionResult> ViewCart()
         {
             ApplicationUser user = await _userManager.GetUserAsync(User);
+            // fetch the User's open order. What happens if order is null?
+            Order order = await _context.Order.Include(o => o.CompositeProduct).SingleOrDefaultAsync(o => o.PaymentTypeID == null && o.User == user);
+            ViewCartVM model = new ViewCartVM(_context, order);
 
-            return View();
+            return View(model);
         }
 
 

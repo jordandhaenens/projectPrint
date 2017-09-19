@@ -45,7 +45,7 @@ namespace ProjectPrintDos.Data
                     SecurityStamp = Guid.NewGuid().ToString("D")
                 };
                 var passwordHash = new PasswordHasher<ApplicationUser>();
-                user.PasswordHash = passwordHash.HashPassword(user, "Admin8*");
+                user.PasswordHash = passwordHash.HashPassword(user, "admin");
                 await userstore.CreateAsync(user);
                 await userstore.AddToRoleAsync(user, "ADMINISTRATOR");
                 await context.SaveChangesAsync();

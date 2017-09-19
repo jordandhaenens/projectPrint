@@ -10,8 +10,12 @@ namespace ProjectPrintDos.Models
     {
         [Key]
         public int CompositeProductID { get; set; }
+
         [DataType(DataType.Date)]
         public DateTime DateCreated { get; set; }
+
+        [DisplayFormat(DataFormatString = "{0:C}")]
+        public double ? Price { get; set; } 
 
         // ForeignKey
         public int ? ProductTypeID { get; set; }
