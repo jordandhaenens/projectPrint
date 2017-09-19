@@ -127,6 +127,30 @@ namespace ProjectPrintDos.Controllers
             return View(model);
         }
 
+        // This action is authored by Jordan Dhaenens
+        // This action presents the User with their default shipping and billing addresses, payment option, and cart items
+        // GET: Order/CloseOrder/3
+        public async Task<IActionResult> CloseOrder(int? id)
+        {
+            if (id == null) 
+            {
+                return NotFound();
+            }
+            ApplicationUser user = await _userManager.GetUserAsync(User);
+
+            // I need the order, User, default BillingAddress, default ShippingAddress, and default PaymentType in model
+            CloseOrderVM model = new CloseOrderVM(_context, (int)id, user);
+            return View(model);
+        } 
+
+        // This action is authored by Jordan Dhaenens
+        // This action updates the Order with every property complete
+        // POST: Order/CloseOrder/3
+        public async Task<IActionResult> CloseOrder([Bind("")] CloseOrderVM model)
+        {
+
+        }
+
 
         // GET: Order/Create
         public IActionResult Create()

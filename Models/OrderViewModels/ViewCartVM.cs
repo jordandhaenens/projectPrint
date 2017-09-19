@@ -15,6 +15,8 @@ namespace ProjectPrintDos.Models.OrderViewModels
         public IEnumerable<CompositeProduct> userProducts { get; set; }
         public double ? ShoppingCartTotal { get; set; }
 
+        public int OrderID { get; set; }
+
         public ViewCartVM(ApplicationDbContext ctx, Order order)
         {
             // userProducts = order.CompositeProduct;
@@ -26,6 +28,8 @@ namespace ProjectPrintDos.Models.OrderViewModels
 
             // Get the total price of all items in cart 
             ShoppingCartTotal = userProducts.Sum(cp => cp.Price);
+
+            OrderID = order.OrderID;
         }
     }
 }

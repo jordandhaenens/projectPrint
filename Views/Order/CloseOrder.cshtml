@@ -1,0 +1,78 @@
+@model ProjectPrintDos.Models.OrderViewModels.CloseOrderVM
+
+<form asp-action="CloseOrder">
+    <!-- Shopping Cart Table -->
+    <table class="table">
+        <thead>
+            <tr>
+                <th>
+                    <h4>Your Order</h4>
+                </th>
+                <th>
+                    <h4></h4>
+                </th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (var item in Model.UserProducts)
+            {
+                <tr>
+                    <td>
+                        <p>
+                            @item.ProductType.Title-@item.ProductType.BaseColor <br>
+                            @if (@item.Ink != null && @item.Screen != null)
+                            {
+                                @item.Ink.Title <br>
+                                @item.Screen.Title
+                            }
+                        </p>    
+                    </td>
+                    <td>
+                        <p>$@item.Price</p>
+                    </td>
+                </tr>
+            }
+            <!-- Address section -->
+            <tr class="form-group">
+                <td>
+                    <input asp-for="DefaultShippingAddress" class="form-control hide">
+                    <span asp-validation-for="DefaultShippingAddress" class="hide"></span>
+                    <p>
+                        @Model.DefaultShippingAddress.Street <br>
+                        @if (@Model.DefaultShippingAddress.Unit != null)
+                        {
+                            @Model.DefaultShippingAddress.Unit <br>
+                        }
+                        @Model.DefaultShippingAddress.City
+                        @Model.DefaultShippingAddress.State
+                        @Model.DefaultShippingAddress.ZipCode
+                    </p>
+                </td>
+                <td>
+                    <input asp-for="DefaultBillingAddress" class="form-control hide">
+                    <span asp-validation-for="DefaultBillingAddress" class="hide"></span>
+                    <p>
+                        @Model.DefaultBillingAddress.Street <br>
+                        @if (@Model.DefaultBillingAddress.Unit != null)
+                        {
+                            @Model.DefaultBillingAddress.Unit <br>
+                        }
+                        @Model.DefaultBillingAddress.City
+                        @Model.DefaultBillingAddress.State
+                        @Model.DefaultBillingAddress.ZipCode
+                    </p>
+                </td>
+            </tr>
+            <!-- Running total and order btn -->
+            <tr>
+                <td class="col-sm-6 col-md-8"></td>
+                <td>
+                    <p>$@Model.ShoppingCartTotal</p>
+                </td>
+                <td>
+                    <input type="submit" value="Submit Order" class="btn btn-default">
+                </td>
+            </tr>
+        </tbody>
+    </table>
+</form>
