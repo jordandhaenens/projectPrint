@@ -100,6 +100,19 @@ namespace ProjectPrintDos.Controllers
             return RedirectToAction("ViewCart", "Order");
         }
 
+        // This action is authored by Jordan Dhaenens
+        // This action will remove the selected item from the User's cart and delete it from DB
+        // POST: Order/RemoveFromCart/3
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public async Task<IActionResult> RemoveFromCart(int id)
+        {
+            CompositeProduct compositeProduct = await _context.CompositeProduct.SingleOrDefaultAsync(cp => cp.CompositeProductID == id);
+            _context.CompositeProduct.Remove(compositeProduct);
+            await _context.SaveChangesAsync();
+            return RedirectToAction("ViewCart");
+        }
+
 
         // This action was authored by Jordan Dhaenens
         // This action presents the User's shopping cart and it's CompositeProducts
