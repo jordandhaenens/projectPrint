@@ -26,10 +26,6 @@ namespace ProjectPrintDos.Models.OrderViewModels
 
             // Get the total price of all items in cart 
             ShoppingCartTotal = userProducts.Sum(cp => cp.Price);
-            // foreach (var item in userProducts)
-            // {
-            //     ShoppingCartTotal += item.Price;
-            // }
         }
     }
 }

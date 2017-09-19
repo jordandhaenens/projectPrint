@@ -33,7 +33,9 @@
                     <p>$@item.Price</p>
                 </td>
                 <td>
-                    <a asp-controller="CompositeProduct" asp-action="Delete" asp-route-id="@item.CompositeProductID">Remove</a>
+                    <form asp-action="RemoveFromCart" asp-route-id="@item.CompositeProductID">
+                        <input type="submit" value="Remove from Cart" class="btn btn-default">
+                    </form>
                 </td>
             </tr>
         }
