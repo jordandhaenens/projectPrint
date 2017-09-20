@@ -10,6 +10,7 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.Extensions.Logging;
 using Microsoft.Extensions.Options;
+using ProjectPrintDos.Data;
 using ProjectPrintDos.Models;
 using ProjectPrintDos.Models.AccountViewModels;
 using ProjectPrintDos.Services;
@@ -24,17 +25,20 @@ namespace ProjectPrintDos.Controllers
         private readonly SignInManager<ApplicationUser> _signInManager;
         private readonly IEmailSender _emailSender;
         private readonly ILogger _logger;
+        private readonly ApplicationDbContext _context;
 
         public AccountController(
             UserManager<ApplicationUser> userManager,
             SignInManager<ApplicationUser> signInManager,
             IEmailSender emailSender,
-            ILogger<AccountController> logger)
+            ILogger<AccountController> logger,
+            ApplicationDbContext context)
         {
             _userManager = userManager;
             _signInManager = signInManager;
             _emailSender = emailSender;
             _logger = logger;
+            _context = context;
         }
 
         [TempData]
@@ -224,6 +228,7 @@ namespace ProjectPrintDos.Controllers
                 var result = await _userManager.CreateAsync(user, model.Password);
                 // Testing to see if new users can be automatically added to role "User" when registering
                 await _userManager.AddToRoleAsync(user, "USER");
+                await _context.SaveChangesAsync();
                 
                 if (result.Succeeded)
                 {
