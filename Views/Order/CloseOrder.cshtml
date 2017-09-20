@@ -35,7 +35,8 @@
             <!-- Address section -->
             <tr class="form-group">
                 <td>
-                    <input asp-for="DefaultShippingAddress" class="form-control hide">
+                    <label>Shipping Address</label>
+                    <input asp-for="DefaultShippingAddress" name="DefaultShippingAddress" class="form-control hide" value="@Model.DefaultShippingAddress">
                     <span asp-validation-for="DefaultShippingAddress" class="hide"></span>
                     <p>
                         @Model.DefaultShippingAddress.Street <br>
@@ -49,7 +50,8 @@
                     </p>
                 </td>
                 <td>
-                    <input asp-for="DefaultBillingAddress" class="form-control hide">
+                    <label>Billing Address</label>
+                    <input asp-for="DefaultBillingAddress" name="DefaultBillingAddress" class="form-control hide" value="@Model.DefaultBillingAddress">
                     <span asp-validation-for="DefaultBillingAddress" class="hide"></span>
                     <p>
                         @Model.DefaultBillingAddress.Street <br>
@@ -63,13 +65,26 @@
                     </p>
                 </td>
             </tr>
+            <!-- Payment section -->
+            <tr>
+                <td>
+                    <label>Payment Option</label>
+                    <input asp-for="DefaultPaymentType" class="form-control hide">
+                    <span asp-validation-for="DefaultPaymentType" class="hide"></span>
+                    <p>
+                        @Model.DefaultPaymentType.Type <br>
+                        @Model.DefaultPaymentType.AccountNumber
+                    </p>
+                </td>
+            </tr>
             <!-- Running total and order btn -->
             <tr>
-                <td class="col-sm-6 col-md-8"></td>
-                <td>
+                <!-- <td class="col-sm-12 col-md-4"></td> -->
+                <td class="col-sm-12 col-md-4">
+                    <label>Your Order Total</label>
                     <p>$@Model.ShoppingCartTotal</p>
                 </td>
-                <td>
+                <td class="col-sm-12 col-md-4">
                     <input type="submit" value="Submit Order" class="btn btn-default">
                 </td>
             </tr>

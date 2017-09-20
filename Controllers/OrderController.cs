@@ -100,6 +100,7 @@ namespace ProjectPrintDos.Controllers
             return RedirectToAction("ViewCart", "Order");
         }
 
+       
         // This action is authored by Jordan Dhaenens
         // This action will remove the selected item from the User's cart and delete it from DB
         // POST: Order/RemoveFromCart/3
@@ -112,6 +113,7 @@ namespace ProjectPrintDos.Controllers
             await _context.SaveChangesAsync();
             return RedirectToAction("ViewCart");
         }
+
 
 
         // This action was authored by Jordan Dhaenens
@@ -127,6 +129,8 @@ namespace ProjectPrintDos.Controllers
             return View(model);
         }
 
+
+
         // This action is authored by Jordan Dhaenens
         // This action presents the User with their default shipping and billing addresses, payment option, and cart items
         // GET: Order/CloseOrder/3
@@ -138,17 +142,41 @@ namespace ProjectPrintDos.Controllers
             }
             ApplicationUser user = await _userManager.GetUserAsync(User);
 
-            // I need the order, User, default BillingAddress, default ShippingAddress, and default PaymentType in model
             CloseOrderVM model = new CloseOrderVM(_context, (int)id, user);
             return View(model);
         } 
 
+
+
         // This action is authored by Jordan Dhaenens
         // This action updates the Order with every property complete
         // POST: Order/CloseOrder/3
-        public async Task<IActionResult> CloseOrder([Bind("")] CloseOrderVM model)
+        [HttpPost]
+        public async Task<IActionResult> CloseOrder(int id, BillingAddress DefaultBillingAddress, ShippingAddress DefaultShippingAddress, DefaultPaymentType, Order")] CloseOrderVM model)
         {
-
+            // Attach the billing and shipping addresses and paymentType to order
+            model.Order.BillingAddressID = model.DefaultBillingAddress.BillingAddressID;
+            model.Order.ShippingAddressID = model.DefaultShippingAddress.ShippingAddressID;
+            model.Order.PaymentTypeID = model.DefaultPaymentType.PaymentTypeID;
+            
+            try
+            {
+                _context.Update(model.Order);
+                await _context.SaveChangesAsync();
+            }
+            catch (DbUpdateConcurrencyException)
+            {
+                if (!OrderExists(model.Order.OrderID))
+                {
+                    return NotFound();
+                }
+                else
+                {
+                    throw;
+                }
+            }
+            return RedirectToAction("#");
+        
         }
 
 
