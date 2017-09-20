@@ -16,7 +16,7 @@ namespace ProjectPrintDos.Models.PaymentViewModels
         public Order Order { get; set; }
         public PaymentDeleteVM(ApplicationDbContext ctx, int id)
         {
-            this.PaymentType = ctx.PaymentType.SingleOrDefault(pt => pt.PaymentTypeID == id);
+            this.PaymentType = ctx.PaymentType.Include(pt => pt.User).SingleOrDefault(pt => pt.PaymentTypeID == id);
             this.Order = ctx.Order.FirstOrDefault(o => o.PaymentTypeID == id);
         }
     }
