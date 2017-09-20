@@ -152,30 +152,38 @@ namespace ProjectPrintDos.Controllers
         // This action updates the Order with every property complete
         // POST: Order/CloseOrder/3
         [HttpPost]
-        public async Task<IActionResult> CloseOrder(int id, BillingAddress DefaultBillingAddress, ShippingAddress DefaultShippingAddress, DefaultPaymentType, Order")] CloseOrderVM model)
+        public async Task<IActionResult> CloseOrder(int id, Order order)
         {
-            // Attach the billing and shipping addresses and paymentType to order
-            model.Order.BillingAddressID = model.DefaultBillingAddress.BillingAddressID;
-            model.Order.ShippingAddressID = model.DefaultShippingAddress.ShippingAddressID;
-            model.Order.PaymentTypeID = model.DefaultPaymentType.PaymentTypeID;
-            
-            try
+            if (order.OrderID != id)
             {
-                _context.Update(model.Order);
-                await _context.SaveChangesAsync();
+                return NotFound();
             }
-            catch (DbUpdateConcurrencyException)
+            ApplicationUser user = await _userManager.GetUserAsync(User);
+            ModelState.Remove("User");
+
+            if (ModelState.IsValid)
             {
-                if (!OrderExists(model.Order.OrderID))
+                try
                 {
-                    return NotFound();
+                    order.User = user;
+                    _context.Update(order);
+                    await _context.SaveChangesAsync();
                 }
-                else
+                catch (DbUpdateConcurrencyException)
                 {
-                    throw;
+                    if (!OrderExists(order.OrderID))
+                    {
+                        return NotFound();
+                    }
+                    else
+                    {
+                        throw;
+                    }
                 }
+                return RedirectToAction("Products", "Home");
             }
-            return RedirectToAction("#");
+            CloseOrderVM brokenModel = new CloseOrderVM(_context, (int)id, user);
+            return View(brokenModel);
         
         }
 
