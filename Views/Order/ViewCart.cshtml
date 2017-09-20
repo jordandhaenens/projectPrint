@@ -45,7 +45,7 @@
                 <p>$@Model.ShoppingCartTotal</p>
             </td>
             <td>
-                <a class="btn btn-default" asp-controller="#" asp-action="#">Close Order</a>
+                <a class="btn btn-default" asp-controller="Order" asp-action="CloseOrder" asp-route-id="@Model.OrderID">Close Order</a>
             </td>
         </tr>
     </tbody>

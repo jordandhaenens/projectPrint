@@ -1,0 +1,92 @@
+@model ProjectPrintDos.Models.OrderViewModels.CloseOrderVM
+
+<form asp-action="CloseOrder">
+    <!-- Shopping Cart Table -->
+    <table class="table">
+        <thead>
+            <tr>
+                <th>
+                    <h4>Your Order</h4>
+                </th>
+                <th>
+                    <h4></h4>
+                </th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (var item in Model.UserProducts)
+            {
+                <tr>
+                    <td>
+                        <p>
+                            @item.ProductType.Title-@item.ProductType.BaseColor <br>
+                            @if (@item.Ink != null && @item.Screen != null)
+                            {
+                                @item.Ink.Title <br>
+                                @item.Screen.Title
+                            }
+                        </p>    
+                    </td>
+                    <td>
+                        <p>$@item.Price</p>
+                    </td>
+                </tr>
+            }
+            <!-- Address section -->
+            <tr class="form-group">
+                <td>
+                    <label>Shipping Address</label>
+                    <input name="ShippingAddressID" class="form-control hide" value="@Model.DefaultShippingAddress.ShippingAddressID">
+                    <p>
+                        @Model.DefaultShippingAddress.Street <br>
+                        @if (@Model.DefaultShippingAddress.Unit != null)
+                        {
+                            @Model.DefaultShippingAddress.Unit <br>
+                        }
+                        @Model.DefaultShippingAddress.City
+                        @Model.DefaultShippingAddress.State
+                        @Model.DefaultShippingAddress.ZipCode
+                    </p>
+                </td>
+                <td>
+                    <label>Billing Address</label>
+                    <input name="BillingAddressID" class="form-control hide" value="@Model.DefaultBillingAddress.BillingAddressID">
+                    <p>
+                        @Model.DefaultBillingAddress.Street <br>
+                        @if (@Model.DefaultBillingAddress.Unit != null)
+                        {
+                            @Model.DefaultBillingAddress.Unit <br>
+                        }
+                        @Model.DefaultBillingAddress.City
+                        @Model.DefaultBillingAddress.State
+                        @Model.DefaultBillingAddress.ZipCode
+                    </p>
+                </td>
+            </tr>
+            <!-- Payment section -->
+            <tr>
+                <td>
+                    <label>Payment Option</label>
+                    <input name="PaymentTypeID" class="form-control hide" value="@Model.DefaultPaymentType.PaymentTypeID">
+                    <p>
+                        @Model.DefaultPaymentType.Type <br>
+                        @Model.DefaultPaymentType.AccountNumber
+                    </p>
+                </td>
+            </tr>
+            <!-- Running total and order btn -->
+            <tr>
+                <td>
+                    <input name="OrderID" class="hide" value="@Model.Order.OrderID">
+                </td>
+                <td class="col-sm-12 col-md-4">
+                    <label>Your Order Total</label>
+                    <p>$@Model.ShoppingCartTotal</p>
+                </td>
+                <td class="col-sm-12 col-md-4">
+                    <input type="submit" value="Submit Order" class="btn btn-default">
+                </td>
+            </tr>
+        </tbody>
+    </table>
+</form>

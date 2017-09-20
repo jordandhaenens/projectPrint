@@ -100,6 +100,7 @@ namespace ProjectPrintDos.Controllers
             return RedirectToAction("ViewCart", "Order");
         }
 
+       
         // This action is authored by Jordan Dhaenens
         // This action will remove the selected item from the User's cart and delete it from DB
         // POST: Order/RemoveFromCart/3
@@ -114,6 +115,7 @@ namespace ProjectPrintDos.Controllers
         }
 
 
+
         // This action was authored by Jordan Dhaenens
         // This action presents the User's shopping cart and it's CompositeProducts
         // GET: Order/ViewCart
@@ -125,6 +127,64 @@ namespace ProjectPrintDos.Controllers
             ViewCartVM model = new ViewCartVM(_context, order);
 
             return View(model);
+        }
+
+
+
+        // This action is authored by Jordan Dhaenens
+        // This action presents the User with their default shipping and billing addresses, payment option, and cart items
+        // GET: Order/CloseOrder/3
+        public async Task<IActionResult> CloseOrder(int? id)
+        {
+            if (id == null) 
+            {
+                return NotFound();
+            }
+            ApplicationUser user = await _userManager.GetUserAsync(User);
+
+            CloseOrderVM model = new CloseOrderVM(_context, (int)id, user);
+            return View(model);
+        } 
+
+
+
+        // This action is authored by Jordan Dhaenens
+        // This action updates the Order with every property complete
+        // POST: Order/CloseOrder/3
+        [HttpPost]
+        public async Task<IActionResult> CloseOrder(int id, Order order)
+        {
+            if (order.OrderID != id)
+            {
+                return NotFound();
+            }
+            ApplicationUser user = await _userManager.GetUserAsync(User);
+            ModelState.Remove("User");
+
+            if (ModelState.IsValid)
+            {
+                try
+                {
+                    order.User = user;
+                    _context.Update(order);
+                    await _context.SaveChangesAsync();
+                }
+                catch (DbUpdateConcurrencyException)
+                {
+                    if (!OrderExists(order.OrderID))
+                    {
+                        return NotFound();
+                    }
+                    else
+                    {
+                        throw;
+                    }
+                }
+                return RedirectToAction("Products", "Home");
+            }
+            CloseOrderVM brokenModel = new CloseOrderVM(_context, (int)id, user);
+            return View(brokenModel);
+        
         }
 
 
