@@ -17,10 +17,10 @@
                 {
                     <div class="col-sm-6 col-md-3">
                         <div class="thumbnail">
-                            <img src="#" alt="...">
+                            <img src="../../images/black.tiff" alt="...">
                             <div class="caption">
                                 <label asp-for="@item.Title">@item.Title</label>
-                                <input type="radio" name="screenID" class="form-control" value="@item.ScreenID">
+                                <input type="radio" name="screenID" value="@item.ScreenID">
                                 <span asp-validation-for="@item.ScreenID" class="text-danger"></span>
                             </div>
                         </div>
@@ -32,11 +32,11 @@
                 @foreach (var item in Model.Inks)
                 {
                     <div class="col-sm-4 col-md-1">
-                        <div class="thumbnail">
+                        <div class="thumbnail" background-color="{@item.Title}">
                             <img src="#" alt="...">
                             <div class="caption">
                                 <label asp-for="@item.Title">@item.Title</label>
-                                <input type="radio" name="inkID" class="form-control" value="@item.InkID">
+                                <input type="radio" name="inkID" value="@item.InkID">
                                 <span asp-validation-for="@item.InkID" class="text-danger"></span>
                             </div>
                         </div>
