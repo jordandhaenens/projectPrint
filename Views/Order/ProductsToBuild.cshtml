@@ -6,7 +6,7 @@
         <thead>
             <tr>
                 <th>
-                    <h4>Billing Addresses</h4>
+                    <h4>Composite Product</h4>
                 </th>
                 <th>
                     <h4>OrderID</h4>
@@ -14,34 +14,27 @@
             </tr>
         </thead>
         <tbody>
+            <!-- item is a CompositeProduct -->
             @foreach (var item in Model.OrderedProducts)
             {
                 <tr>
                     <td>
                         <p>
-                            @item. <br>
                             @if (@item.ScreenID != null)
                             {
-                                @item.Unit <br>
+                                @item.Screen.Title <br>
+                                @item.Ink.Title <br>
                             }
-                            @item.City
-                            @item.State
-                            @item.ZipCode
+                            @item.ProductType.Title
                         </p>
                     </td>
                     <td>
-                        @if (item.IsDefault)
-                        {
-                            <p>Your Default Billing Address</p>
-                        }
-                        else
-                        {
-                            <p></p>
-                        }
+                        <p>@item.OrderID</p>
                     </td>
                     <td>
-                        <a asp-controller="BillingAddress" asp-action="Edit" asp-route-id="@item.BillingAddressID">Edit</a> | 
-                        <a asp-controller="BillingAddress" asp-action="Delete" asp-route-id="@item.BillingAddressID">Delete</a>
+                        <form asp-controller="#" asp-action="MarkAsDone" asp-route-id="@item.CompositeProductID">
+                            <input type="submit" disabled  class="btn btn-default" value="Done">
+                        </form>
                     </td>
                 </tr>
             }

@@ -10,17 +10,20 @@ using Microsoft.EntityFrameworkCore;
 
 namespace ProjectPrintDos.Models.OrderViewModels
 {
-    public class ProductsToBuild
+    public class ProductsToBuildVM
     {
         public IEnumerable<CompositeProduct> Products { get; set; }
         public IEnumerable<CompositeProduct> OrderedProducts { get; set; }
 
 
-        public ProductsToBuild(ApplicationDbContext ctx)
+        public ProductsToBuildVM(ApplicationDbContext ctx)
         {
             Products = ctx.CompositeProduct
-                .Include(cp => cp.Order)
-                .Where(cp => cp.Order.IsFulfilled == null && cp.Order.PaymentTypeID != null);
+                .Include(c => c.Order)
+                .Include(c => c.Screen)
+                .Include(c => c.Ink)
+                .Include(c => c.ProductType)
+                .Where(c => c.Order.IsFulfilled == null && c.Order.PaymentTypeID != null);
 
             // This works but needs optimization to list by ordering count or priority
             OrderedProducts = Products.OrderBy(p => p.ScreenID).ThenBy(p => p.InkID);

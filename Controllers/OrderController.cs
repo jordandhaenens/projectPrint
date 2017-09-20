@@ -38,11 +38,10 @@ namespace ProjectPrintDos.Controllers
         // This action fetchs all CompositeProducts for unfulfilled, paid orders and orders them by similarity to optimize production time
         // GET: /Order/ProductsToBuild
         [HttpGet]
+        [Authorize(Roles = "Administrator")]
         public async Task<IActionResult> ProductsToBuild()
         {
-            ProductsToBuild model = new ProductsToBuild(_context);
-
-
+            ProductsToBuildVM model = new ProductsToBuildVM(_context);
 
             return View(model);
         }
