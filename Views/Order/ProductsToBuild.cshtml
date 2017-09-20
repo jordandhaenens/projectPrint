@@ -1,0 +1,45 @@
+@model ProjectPrintDos.Models.OrderViewModels.ProductsToBuildVM
+
+<div>
+    <!-- Build Priority -->
+    <table class="table">
+        <thead>
+            <tr>
+                <th>
+                    <h4>Composite Product</h4>
+                </th>
+                <th>
+                    <h4>OrderID</h4>
+                </th>
+            </tr>
+        </thead>
+        <tbody>
+            <!-- item is a CompositeProduct -->
+            @foreach (var item in Model.OrderedProducts)
+            {
+                <tr>
+                    <td>
+                        <p>
+                            @if (@item.ScreenID != null)
+                            {
+                                @item.Screen.Title <br>
+                                @item.Ink.Title <br>
+                            }
+                            @item.ProductType.Title
+                        </p>
+                    </td>
+                    <td>
+                        <p>@item.OrderID</p>
+                    </td>
+                    <td>
+                        <form asp-controller="#" asp-action="MarkAsDone" asp-route-id="@item.CompositeProductID">
+                            <input type="submit" disabled  class="btn btn-default" value="Done">
+                        </form>
+                    </td>
+                </tr>
+            }
+        </tbody>
+    </table>
+
+
+</div>

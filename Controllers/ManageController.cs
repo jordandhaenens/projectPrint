@@ -8,6 +8,7 @@ using Microsoft.AspNetCore.Authentication;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Logging;
 using Microsoft.Extensions.Options;
 using ProjectPrintDos.Data;
@@ -144,7 +145,8 @@ namespace ProjectPrintDos.Controllers
 
             InventoryVM model = new InventoryVM(_context);
             return View(model);
-        }  
+        }   
+
 
         // This method is authored by Jordan Dhaenens
         // This method will display a User's addresses

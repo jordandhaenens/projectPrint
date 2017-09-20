@@ -32,6 +32,22 @@ namespace ProjectPrintDos.Controllers
             return View(await applicationDbContext.ToListAsync());
         }
 
+        
+
+        // This action is authored by Jordan Dhaenens
+        // This action fetchs all CompositeProducts for unfulfilled, paid orders and orders them by similarity to optimize production time
+        // GET: /Order/ProductsToBuild
+        [HttpGet]
+        [Authorize(Roles = "Administrator")]
+        public async Task<IActionResult> ProductsToBuild()
+        {
+            ProductsToBuildVM model = new ProductsToBuildVM(_context);
+
+            return View(model);
+        }
+
+
+
         // GET: Order/Details/5
         public async Task<IActionResult> Details(int? id)
         {
