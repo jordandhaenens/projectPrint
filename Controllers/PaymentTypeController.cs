@@ -171,6 +171,8 @@ namespace ProjectPrintDos.Controllers
             return View(paymentType);
         }
 
+
+        // This action is modified by Jordan Dhaenens to verify that paymentType.IsActive == true
         // GET: PaymentType/Delete/5
         public async Task<IActionResult> Delete(int? id)
         {
@@ -189,6 +191,9 @@ namespace ProjectPrintDos.Controllers
             return View(paymentType);
         }
 
+
+        // This action is authored by Jordan Dhaenens
+        // This action deletes a paymentType from the DB unless it is associated with an Order
         // POST: PaymentType/Delete/5
         [HttpPost, ActionName("Delete")]
         [ValidateAntiForgeryToken]
@@ -201,7 +206,7 @@ namespace ProjectPrintDos.Controllers
                 // No instance of this PaymentTypeId exists in Order table. OK to erase
                 _context.PaymentType.Remove(modelVM.PaymentType);
             }
-            else if (ModelState.IsValid)
+            else
             {
                 try
                 {
