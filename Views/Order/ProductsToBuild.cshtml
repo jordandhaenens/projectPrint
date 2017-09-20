@@ -1,0 +1,52 @@
+@model ProjectPrintDos.Models.OrderViewModels.ProductsToBuildVM
+
+<div>
+    <!-- Build Priority -->
+    <table class="table">
+        <thead>
+            <tr>
+                <th>
+                    <h4>Billing Addresses</h4>
+                </th>
+                <th>
+                    <h4>OrderID</h4>
+                </th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (var item in Model.OrderedProducts)
+            {
+                <tr>
+                    <td>
+                        <p>
+                            @item. <br>
+                            @if (@item.ScreenID != null)
+                            {
+                                @item.Unit <br>
+                            }
+                            @item.City
+                            @item.State
+                            @item.ZipCode
+                        </p>
+                    </td>
+                    <td>
+                        @if (item.IsDefault)
+                        {
+                            <p>Your Default Billing Address</p>
+                        }
+                        else
+                        {
+                            <p></p>
+                        }
+                    </td>
+                    <td>
+                        <a asp-controller="BillingAddress" asp-action="Edit" asp-route-id="@item.BillingAddressID">Edit</a> | 
+                        <a asp-controller="BillingAddress" asp-action="Delete" asp-route-id="@item.BillingAddressID">Delete</a>
+                    </td>
+                </tr>
+            }
+        </tbody>
+    </table>
+
+
+</div>
