@@ -1,23 +1,25 @@
 @model ProjectPrintDos.Models.ProductTypeViewModels.ProductBuilderVM
 
 @inject SignInManager<ApplicationUser> SignInManager
-<div class="container-fluid">
 
-    <div>
-        <h4>Product Details</h4>
-        <hr>
-    </div>
 
-    <form asp-controller="Order" asp-action="BuildProductAddToOrder">
-        <div class="form-horizontal">
+<div>
+    <h4>Customize Your @Model.ProductType.BaseColor @Model.ProductType.Title by choosing from the designs and inks below:</h4>
+    <hr>
+</div>
+
+<form asp-controller="Order" asp-action="BuildProductAddToOrder" class="form-horizontal">
+
         <!-- Screens and Inks Cards -->
-
-            <div class="form-group">
+        <div class="form-group row">
+            <!-- <div class="col-sm-12 col-md-12"> -->
+                <h5>Pick a Screen Design</h5>
+                <div class="col-sm-0 col-md-1"></div>
                 @foreach (var item in Model.Screens)
                 {
                     <div class="col-sm-6 col-md-3">
                         <div class="thumbnail">
-                            <img src="../../images/black.tiff" alt="...">
+                            <img src="~/images/tshirt1.jpg" alt="...">
                             <div class="caption">
                                 <label asp-for="@item.Title">@item.Title</label>
                                 <input type="radio" name="screenID" value="@item.ScreenID">
@@ -26,50 +28,60 @@
                         </div>
                     </div>                    
                 }
-            </div>
-            
-            <div class="form-group">
-                @foreach (var item in Model.Inks)
-                {
-                    <div class="col-sm-4 col-md-1">
-                        <div class="thumbnail" background-color="{@item.Title}">
-                            <img src="#" alt="...">
-                            <div class="caption">
-                                <label asp-for="@item.Title">@item.Title</label>
-                                <input type="radio" name="inkID" value="@item.InkID">
-                                <span asp-validation-for="@item.InkID" class="text-danger"></span>
-                            </div>
-                        </div>
-                    </div>
-                }
-            </div>
-
-            <div class="form-group">
-                <div class="col-sm-12 col-md-6">
-                    <div class="thumbnail">
-                        <img src="#" alt="...">
-                        <div class="caption">
-                            <label asp-for="@Model.ProductType.Title"></label>
-                            <p>
-                                @Model.ProductType.Title <br>
-                                @Model.ProductType.BaseColor
-                            </p>
-                            <input type="radio" name="productTypeID" checked class="form-control hidden" value="@Model.ProductType.ProductTypeID">
-                            <span asp-validation-for="@Model.ProductType.ProductTypeID" class="text-danger"></span>
-                        </div>
-                    </div>
-                </div>
-            </div>
-
-            @if (SignInManager.IsSignedIn(User))
+            <!-- </div> -->
+            <div class="col-sm-0 col-md-1"></div>
+        </div>
+        
+        <div class="form-group">
+            <h5>Pick an Ink Color</h5>
+            <div class="col-sm-0 col-md-1"></div>
+            @foreach (var item in Model.Inks)
             {
-                <div class="form-group">
-                    <div class="col-md-offset-2 col-md-10">
-                        <input type="submit" value="Create" class="btn btn-default"/>
+                <div class="col-sm-4 col-md-2">
+                    <div class="thumbnail" background-color="{@item.Title}">
+                        <img src="~/images/black.jpg" alt="...">
+                        <div class="caption">
+                            <label asp-for="@item.Title">@item.Title</label>
+                            <input type="radio" name="inkID" value="@item.InkID">
+                            <span asp-validation-for="@item.InkID" class="text-danger"></span>
+                        </div>
                     </div>
                 </div>
             }
+            <input type="radio" name="productTypeID" checked class="form-control hidden" value="@Model.ProductType.ProductTypeID">
+            <span asp-validation-for="@Model.ProductType.ProductTypeID" class="text-danger"></span>
+            <!-- <div class="col-sm-12 col-md-2"> -->
+                
+            <!-- </div> -->
         </div>
-    </form>
 
-</div>
+        @if (SignInManager.IsSignedIn(User))
+        {
+            <div class="form-group">
+                <div class="col-sm-12 col-md-offset-4 col-md-3">
+                    <input type="submit" value="Create" class="btn btn-danger"/>
+                </div>
+            </div>
+        }
+
+        <!-- <div class="form-group">
+            <div class="col-sm-12 col-md-6">
+                <div class="thumbnail">
+                    <img src="~/images/tshirt1.jpg" alt="...">
+                    <div class="caption">
+                        <label asp-for="@Model.ProductType.Title"></label>
+                        <p>
+                            @Model.ProductType.Title <br>
+                            @Model.ProductType.BaseColor
+                        </p>
+                        <input type="radio" name="productTypeID" checked class="form-control hidden" value="@Model.ProductType.ProductTypeID">
+                        <span asp-validation-for="@Model.ProductType.ProductTypeID" class="text-danger"></span>
+                    </div>
+                </div>
+            </div>
+        </div> -->
+
+        
+    </div>
+</form>
+
