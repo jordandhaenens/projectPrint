@@ -175,14 +175,14 @@ namespace ProjectPrintDos.Controllers
                 return NotFound();
             }
             ApplicationUser user = await _userManager.GetUserAsync(User);
-            Order newOrder = await _context.Order.Include(o => o.CompositeProduct).SingleOrDefaultAsync(o => o.OrderID == id);
+            var products = _context.CompositeProduct.Where(p => p.OrderID == id);
             ModelState.Remove("User");
 
             if (ModelState.IsValid)
             {
                 try
                 {
-                    foreach (var product in newOrder.CompositeProduct)
+                    foreach (var product in products)
                     {
                         // update the qty of screenID and inkID
                         if (product.ScreenID != null)
@@ -196,9 +196,9 @@ namespace ProjectPrintDos.Controllers
                             await _context.SaveChangesAsync();
                         }
                         ProductType productType = await _context.ProductType.SingleOrDefaultAsync(p => p.ProductTypeID == product.ProductTypeID);
-                        
-
-                        
+                        productType.Quantity -= 1; 
+                        _context.Update(productType);
+                        await _context.SaveChangesAsync();
                     }
 
                     order.User = user;
