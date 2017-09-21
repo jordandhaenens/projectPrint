@@ -89,7 +89,7 @@ namespace ProjectPrintDos.Controllers
         [Authorize(Roles = "Administrator")]
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Create([Bind("ProductTypeID,Title,BaseColor,Cost,Price,Quantity")] ProductType productType)
+        public async Task<IActionResult> Create([Bind("ProductTypeID,Title,Description,BaseColor,Cost,Price,Quantity,Img")] ProductType productType)
         {
             if (ModelState.IsValid)
             {
@@ -123,7 +123,7 @@ namespace ProjectPrintDos.Controllers
         [Authorize(Roles = "Administrator")]
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Edit(int id, [Bind("ProductTypeID,Title,BaseColor,Cost,Price,Quantity")] ProductType productType)
+        public async Task<IActionResult> Edit(int id, [Bind("ProductTypeID,Description,Title,BaseColor,Cost,Price,Quantity,Img")] ProductType productType)
         {
             if (id != productType.ProductTypeID)
             {

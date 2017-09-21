@@ -18,7 +18,7 @@
         @foreach (var item in Model.BillingAddresses)
         {
             <tr>
-                <td>
+                <td class="col-sm-12 col-md-4">
                     <a asp-controller="BillingAddress" asp-action="Details" asp-route-id="@item.BillingAddressID">
                         <p>
                             @item.Street <br>
@@ -32,7 +32,7 @@
                         </p>    
                     </a>
                 </td>
-                <td>
+                <td class="col-sm-12 col-md-4">
                     @if (item.IsDefault)
                     {
                         <p>Your Default Billing Address</p>
@@ -42,7 +42,7 @@
                         <p></p>
                     }
                 </td>
-                <td>
+                <td class="col-sm-12 col-md-4">
                     <a asp-controller="BillingAddress" asp-action="Edit" asp-route-id="@item.BillingAddressID">Edit</a> | 
                     <a asp-controller="BillingAddress" asp-action="Delete" asp-route-id="@item.BillingAddressID">Delete</a>
                 </td>
@@ -68,7 +68,7 @@
         @foreach (var item in Model.ShippingAddresses)
         {
             <tr>
-                <td>
+                <td class="col-sm-12 col-md-4">
                     <a asp-controller="ShippingAddress" asp-action="Details" asp-route-id="@item.ShippingAddressID">
                         <p>
                             @item.Street <br>
@@ -82,7 +82,7 @@
                         </p>    
                     </a>
                 </td>
-                <td>
+                <td class="col-sm-12 col-md-4">
                     @if (item.IsDefault)
                     {
                         <p>Your Default Shipping Address</p>
@@ -92,7 +92,7 @@
                         <p></p>
                     }
                 </td>
-                <td>
+                <td class="col-sm-12 col-md-4">
                     <a asp-controller="ShippingAddress" asp-action="Edit" asp-route-id="@item.ShippingAddressID">Edit</a> | 
                     <a asp-controller="ShippingAddress" asp-action="Delete" asp-route-id="@item.ShippingAddressID">Delete</a>
                 </td>

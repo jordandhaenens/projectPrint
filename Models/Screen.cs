@@ -24,6 +24,7 @@ namespace ProjectPrintDos.Models
 
         [Required]
         public int Quantity { get; set; }
+        public string Img { get; set; }
 
         public virtual ICollection<CompositeProduct> CompositeProduct { get; set; }
     }

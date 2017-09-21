@@ -56,6 +56,7 @@ namespace ProjectPrintDos.Migrations
                     InkID = table.Column<int>(type: "INTEGER", nullable: false)
                         .Annotation("Sqlite:Autoincrement", true),
                     Cost = table.Column<double>(type: "REAL", nullable: false),
+                    Img = table.Column<string>(type: "TEXT", nullable: true),
                     Price = table.Column<double>(type: "REAL", nullable: false),
                     Quantity = table.Column<int>(type: "INTEGER", nullable: false),
                     Title = table.Column<string>(type: "TEXT", nullable: true)
@@ -73,6 +74,8 @@ namespace ProjectPrintDos.Migrations
                         .Annotation("Sqlite:Autoincrement", true),
                     BaseColor = table.Column<string>(type: "TEXT", nullable: false),
                     Cost = table.Column<double>(type: "REAL", nullable: false),
+                    Description = table.Column<string>(type: "TEXT", nullable: false),
+                    Img = table.Column<string>(type: "TEXT", nullable: true),
                     Price = table.Column<double>(type: "REAL", nullable: false),
                     Quantity = table.Column<int>(type: "INTEGER", nullable: false),
                     Title = table.Column<string>(type: "TEXT", nullable: false)
@@ -89,6 +92,7 @@ namespace ProjectPrintDos.Migrations
                     ScreenID = table.Column<int>(type: "INTEGER", nullable: false)
                         .Annotation("Sqlite:Autoincrement", true),
                     Cost = table.Column<double>(type: "REAL", nullable: false),
+                    Img = table.Column<string>(type: "TEXT", nullable: true),
                     Price = table.Column<double>(type: "REAL", nullable: false),
                     Quantity = table.Column<int>(type: "INTEGER", nullable: false),
                     Title = table.Column<string>(type: "TEXT", nullable: false)
@@ -327,7 +331,7 @@ namespace ProjectPrintDos.Migrations
                     DateCreated = table.Column<DateTime>(type: "TEXT", nullable: false),
                     InkID = table.Column<int>(type: "INTEGER", nullable: true),
                     OrderID = table.Column<int>(type: "INTEGER", nullable: true),
-                    Price = table.Column<double>(type: "REAL", nullable: false),
+                    Price = table.Column<double>(type: "REAL", nullable: true),
                     ProductTypeID = table.Column<int>(type: "INTEGER", nullable: true),
                     ScreenID = table.Column<int>(type: "INTEGER", nullable: true)
                 },

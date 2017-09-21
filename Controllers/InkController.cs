@@ -54,7 +54,7 @@ namespace ProjectPrintDos.Controllers
         // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Create([Bind("InkID,Title,Cost,Price,Quantity")] Ink ink)
+        public async Task<IActionResult> Create([Bind("InkID,Title,Cost,Price,Quantity,Ink")] Ink ink)
         {
             if (ModelState.IsValid)
             {
@@ -86,7 +86,7 @@ namespace ProjectPrintDos.Controllers
         // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Edit(int id, [Bind("InkID,Title,Cost,Price,Quantity")] Ink ink)
+        public async Task<IActionResult> Edit(int id, [Bind("InkID,Title,Cost,Price,Quantity,Img")] Ink ink)
         {
             if (id != ink.InkID)
             {

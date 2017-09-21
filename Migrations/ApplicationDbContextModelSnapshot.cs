@@ -225,7 +225,7 @@ namespace ProjectPrintDos.Migrations
 
                     b.Property<int?>("OrderID");
 
-                    b.Property<double>("Price");
+                    b.Property<double?>("Price");
 
                     b.Property<int?>("ProductTypeID");
 
@@ -250,6 +250,8 @@ namespace ProjectPrintDos.Migrations
                         .ValueGeneratedOnAdd();
 
                     b.Property<double>("Cost");
+
+                    b.Property<string>("Img");
 
                     b.Property<double>("Price");
 
@@ -328,6 +330,11 @@ namespace ProjectPrintDos.Migrations
 
                     b.Property<double>("Cost");
 
+                    b.Property<string>("Description")
+                        .IsRequired();
+
+                    b.Property<string>("Img");
+
                     b.Property<double>("Price");
 
                     b.Property<int>("Quantity");
@@ -346,6 +353,8 @@ namespace ProjectPrintDos.Migrations
                         .ValueGeneratedOnAdd();
 
                     b.Property<double>("Cost");
+
+                    b.Property<string>("Img");
 
                     b.Property<double>("Price");
 

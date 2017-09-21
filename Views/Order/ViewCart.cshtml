@@ -18,16 +18,14 @@
         {
             <tr>
                 <td>
-                    <a asp-controller="CompositeProduct" asp-action="Details" asp-route-id="@item.CompositeProductID">
-                        <p>
-                            @item.ProductType.Title-@item.ProductType.BaseColor <br>
-                            @if (@item.Ink != null && @item.Screen != null)
-                            {
-                                @item.Ink.Title <br>
-                                @item.Screen.Title
-                            }
-                        </p>    
-                    </a>
+                    <p>
+                        @item.ProductType.Title-@item.ProductType.BaseColor <br>
+                        @if (@item.Ink != null && @item.Screen != null)
+                        {
+                            @item.Ink.Title <br>
+                            @item.Screen.Title
+                        }
+                    </p>    
                 </td>
                 <td>
                     <p>$@item.Price</p>
@@ -40,7 +38,9 @@
             </tr>
         }
         <tr>
-            <td class="col-sm-6 col-md-8"></td>
+            <td class="col-sm-6 col-md-8">
+                <p>Order Total</p>
+            </td>
             <td>
                 <p>$@Model.ShoppingCartTotal</p>
             </td>

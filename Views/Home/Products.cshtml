@@ -15,9 +15,9 @@
                 <div class="col-sm-6 col-md-4">
                     <div class="thumbnail">
                         <!-- replace with filepath from VM -->
-                        <img src="~/images/tshirt1.jpg" alt="..."> 
+                        <img class="img-responsive" style="height: 159px" src="@item.Img" alt="..."> 
                         <div class="caption">
-                            <h5>The classic t-shirt</h5><!-- Make this adaptable by adding a "Description" property to the ProductTypes class -->
+                            <h5>@item.Description</h5>
                             <p>
                                 @item.Title <br>
                                 @item.BaseColor
