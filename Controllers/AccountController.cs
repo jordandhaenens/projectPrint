@@ -255,7 +255,7 @@ namespace ProjectPrintDos.Controllers
         {
             await _signInManager.SignOutAsync();
             _logger.LogInformation("User logged out.");
-            return RedirectToAction(nameof(HomeController.Index), "Home");
+            return RedirectToAction(nameof(HomeController.Products), "Home");
         }
 
         [HttpPost]
@@ -343,7 +343,7 @@ namespace ProjectPrintDos.Controllers
         {
             if (userId == null || code == null)
             {
-                return RedirectToAction(nameof(HomeController.Index), "Home");
+                return RedirectToAction(nameof(HomeController.Products), "Home");
             }
             var user = await _userManager.FindByIdAsync(userId);
             if (user == null)
@@ -463,7 +463,7 @@ namespace ProjectPrintDos.Controllers
             }
             else
             {
-                return RedirectToAction(nameof(HomeController.Index), "Home");
+                return RedirectToAction(nameof(HomeController.Products), "Home");
             }
         }
 

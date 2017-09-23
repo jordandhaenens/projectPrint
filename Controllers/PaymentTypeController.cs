@@ -176,6 +176,7 @@ namespace ProjectPrintDos.Controllers
         // GET: PaymentType/Delete/5
         public async Task<IActionResult> Delete(int? id)
         {
+            ApplicationUser user = await _userManager.GetUserAsync(User);
             if (id == null)
             {
                 return NotFound();
@@ -183,7 +184,7 @@ namespace ProjectPrintDos.Controllers
 
             var paymentType = await _context.PaymentType
                 .SingleOrDefaultAsync(m => m.PaymentTypeID == id);
-            if (paymentType == null || paymentType.IsActive != true)
+            if (paymentType == null || paymentType.IsActive != true || paymentType.User != user)
             {
                 return NotFound();
             }
