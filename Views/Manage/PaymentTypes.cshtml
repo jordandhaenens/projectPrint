@@ -5,28 +5,28 @@
 <table class="table">
     <thead>
         <tr>
-            <th>
+            <th class="col-sm-12 col-md-4">
                 <h4>Payment Options</h4>
             </th>
-            <th>
+            <th class="col-sm-12 col-md-4">
                 <h4></h4>
             </th>
-            <th><a class="btn btn-primary" asp-controller="PaymentType" asp-action="Create">Add New Payment Type</a></th>
+            <th class="col-sm-12 col-md-4"><a class="btn btn-primary" asp-controller="PaymentType" asp-action="Create">Add New Payment Type</a></th>
         </tr>
     </thead>
     <tbody>
         @foreach (var item in Model.UserPaymentTypes)
         {
             <tr>
-                <td>
+                <td class="col-sm-12 col-md-4">
                     <a asp-controller="PaymentType" asp-action="Details" asp-route-id="@item.PaymentTypeID">
                         <p>
-                            Type @item.Type <br>
+                            @item.Type <br>
                             @item.AccountNumber
                         </p>    
                     </a>
                 </td>
-                <td>
+                <td class="col-sm-12 col-md-4">
                     @if (@item.IsPrimary)
                     {
                         <p>Your Default Payment Option</p>
@@ -36,7 +36,7 @@
                         <p></p>
                     }
                 </td>
-                <td>
+                <td class="col-sm-12 col-md-4">
                     <a asp-controller="PaymentType" asp-action="Edit" asp-route-id="@item.PaymentTypeID">Edit</a> | 
                     <a asp-controller="PaymentType" asp-action="Delete" asp-route-id="@item.PaymentTypeID">Delete</a>
                 </td>

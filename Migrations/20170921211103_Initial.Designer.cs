@@ -11,7 +11,7 @@ using System;
 namespace ProjectPrintDos.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    [Migration("20170919144548_Initial")]
+    [Migration("20170921211103_Initial")]
     partial class Initial
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -252,6 +252,8 @@ namespace ProjectPrintDos.Migrations
 
                     b.Property<double>("Cost");
 
+                    b.Property<string>("Img");
+
                     b.Property<double>("Price");
 
                     b.Property<int>("Quantity");
@@ -329,6 +331,11 @@ namespace ProjectPrintDos.Migrations
 
                     b.Property<double>("Cost");
 
+                    b.Property<string>("Description")
+                        .IsRequired();
+
+                    b.Property<string>("Img");
+
                     b.Property<double>("Price");
 
                     b.Property<int>("Quantity");
@@ -347,6 +354,8 @@ namespace ProjectPrintDos.Migrations
                         .ValueGeneratedOnAdd();
 
                     b.Property<double>("Cost");
+
+                    b.Property<string>("Img");
 
                     b.Property<double>("Price");
 

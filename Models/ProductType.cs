@@ -16,6 +16,9 @@ namespace ProjectPrintDos.Models
         public string Title { get; set; }
 
         [Required]
+        public string Description { get; set; }
+
+        [Required]
         public string BaseColor { get; set; }
         
         [Required]
@@ -28,6 +31,7 @@ namespace ProjectPrintDos.Models
 
         [Required]
         public int Quantity { get; set; }
+        public string Img { get; set; }
 
         public virtual ICollection<CompositeProduct> CompositeProduct { get; set; }
     }

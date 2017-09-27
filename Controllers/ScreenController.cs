@@ -56,7 +56,7 @@ namespace ProjectPrintDos.Controllers
         // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Create([Bind("ScreenID,Title,Cost,Price,Quantity")] Screen screen)
+        public async Task<IActionResult> Create([Bind("ScreenID,Title,Cost,Price,Quantity,Img")] Screen screen)
         {
             if (ModelState.IsValid)
             {
@@ -88,7 +88,7 @@ namespace ProjectPrintDos.Controllers
         // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Edit(int id, [Bind("ScreenID,Title,Cost,Price,Quantity")] Screen screen)
+        public async Task<IActionResult> Edit(int id, [Bind("ScreenID,Title,Cost,Price,Quantity,Img")] Screen screen)
         {
             if (id != screen.ScreenID)
             {

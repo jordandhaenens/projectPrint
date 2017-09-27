@@ -20,6 +20,13 @@
             </div>
         </div>
         <div class="form-group">
+            <label asp-for="Description" class="col-md-2 control-label"></label>
+            <div class="col-md-10">
+                <input asp-for="Description" class="form-control" />
+                <span asp-validation-for="Description" class="text-danger"></span>
+            </div>
+        </div>
+        <div class="form-group">
             <label asp-for="BaseColor" class="col-md-2 control-label"></label>
             <div class="col-md-10">
                 <input asp-for="BaseColor" class="form-control" />
@@ -45,6 +52,13 @@
             <div class="col-md-10">
                 <input asp-for="Quantity" class="form-control" />
                 <span asp-validation-for="Quantity" class="text-danger"></span>
+            </div>
+        </div>
+        <div class="form-group">
+            <label asp-for="Img" class="col-md-2 control-label"></label>
+            <div class="col-md-10">
+                <input asp-for="Img" class="form-control" />
+                <span asp-validation-for="Img" class="text-danger"></span>
             </div>
         </div>
         <div class="form-group">

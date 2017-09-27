@@ -17,7 +17,7 @@
             @foreach (var item in Model.UserProducts)
             {
                 <tr>
-                    <td>
+                    <td class="col-sm-12 col-md-6">
                         <p>
                             @item.ProductType.Title-@item.ProductType.BaseColor <br>
                             @if (@item.Ink != null && @item.Screen != null)
@@ -34,7 +34,7 @@
             }
             <!-- Address section -->
             <tr class="form-group">
-                <td>
+                <td class="col-sm-12 col-md-6">
                     <label>Shipping Address</label>
                     <input name="ShippingAddressID" class="form-control hide" value="@Model.DefaultShippingAddress.ShippingAddressID">
                     <p>
@@ -48,7 +48,7 @@
                         @Model.DefaultShippingAddress.ZipCode
                     </p>
                 </td>
-                <td>
+                <td class="col-sm-12 col-md-6">
                     <label>Billing Address</label>
                     <input name="BillingAddressID" class="form-control hide" value="@Model.DefaultBillingAddress.BillingAddressID">
                     <p>
@@ -65,7 +65,7 @@
             </tr>
             <!-- Payment section -->
             <tr>
-                <td>
+                <td class="col-sm-12 col-md-6">
                     <label>Payment Option</label>
                     <input name="PaymentTypeID" class="form-control hide" value="@Model.DefaultPaymentType.PaymentTypeID">
                     <p>
@@ -73,17 +73,18 @@
                         @Model.DefaultPaymentType.AccountNumber
                     </p>
                 </td>
+                <td class="col-sm-12 col-md-6"></td>
             </tr>
             <!-- Running total and order btn -->
             <tr>
-                <td>
+                <!-- <td class="col-sm-0"> -->
                     <input name="OrderID" class="hide" value="@Model.Order.OrderID">
-                </td>
-                <td class="col-sm-12 col-md-4">
+                <!-- </td> -->
+                <td class="col-sm-12 col-md-6">
                     <label>Your Order Total</label>
                     <p>$@Model.ShoppingCartTotal</p>
                 </td>
-                <td class="col-sm-12 col-md-4">
+                <td class="col-sm-12 col-md-6">
                     <input type="submit" value="Submit Order" class="btn btn-default">
                 </td>
             </tr>
