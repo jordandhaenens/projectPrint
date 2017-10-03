@@ -32,7 +32,6 @@ namespace ProjectPrintDos.Data
 
             if (!context.ApplicationUser.Any(u => u.FirstName == "admin"))
             {
-                //  This method will be called after migrating to the latest version.
                 ApplicationUser user = new ApplicationUser {
                     FirstName = "admin",
                     LastName = "admin",
@@ -53,7 +52,6 @@ namespace ProjectPrintDos.Data
 
             if (!context.ApplicationUser.Any(u => u.FirstName == "test"))
             {
-                //  This method will be called after migrating to the latest version.
                 ApplicationUser user = new ApplicationUser {
                     FirstName = "test",
                     LastName = "test",
@@ -70,7 +68,73 @@ namespace ProjectPrintDos.Data
                 await userstore.CreateAsync(user);
                 await userstore.AddToRoleAsync(user, "USER");
                 await context.SaveChangesAsync();
-                }
+            }
+
+            if (!context.BillingAddress.Any())
+            {
+                BillingAddress bAddress = new BillingAddress()
+                {
+                    Street = "123 First St",   
+                    City = "Nashvile",
+                    State = "TN",
+                    ZipCode = 37102,
+                    IsDefault = true,
+                    User = await context.ApplicationUser.SingleOrDefaultAsync(u => u.NormalizedUserName == "TEST@TEST.COM")
+                };
+                BillingAddress otherBAddress = new BillingAddress()
+                {
+                    Street = "1324 2nd St",   
+                    City = "Nashvile",
+                    State = "TN",
+                    ZipCode = 37201,
+                    IsDefault = false,
+                    User = await context.ApplicationUser.SingleOrDefaultAsync(u => u.NormalizedUserName == "TEST@TEST.COM")
+                };
+                context.Add(bAddress);
+                context.Add(otherBAddress);
+                await context.SaveChangesAsync();
+            }
+
+            if (!context.Ink.Any())
+            {
+                Ink Ink1 = new Ink() 
+                {
+                    Title = "Cyan",
+                    Cost = 2.5,
+                    Price = 5,
+                    Quantity = 15,
+                    Img = "~/images/turquoise.jpeg"
+                };
+
+                Ink Ink2 = new Ink() 
+                {
+                    Title = "GhostWhite",
+                    Cost = 2.5,
+                    Price = 5,
+                    Quantity = 15,
+                    Img = "~/images/ghostWhite.jpg"   
+                };
+
+                Ink Ink3 = new Ink() 
+                {
+                    Title = "Black",
+                    Cost = 2.5,
+                    Price = 5,
+                    Quantity = 15,
+                    Img = "~/images/black.jpg"   
+                };
+                
+                context.Add(Ink1);
+                context.Add(Ink2);
+                context.Add(Ink3);
+                await context.SaveChangesAsync();
+            }
+
+            if (!context.Screen.Any())
+            {
+                
+            }
+                
         }
     }
 }
