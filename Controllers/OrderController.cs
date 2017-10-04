@@ -39,7 +39,7 @@ namespace ProjectPrintDos.Controllers
         // GET: /Order/ProductsToBuild
         [HttpGet]
         [Authorize(Roles = "Administrator")]
-        public async Task<IActionResult> ProductsToBuild()
+        public IActionResult ProductsToBuild()
         {
             ProductsToBuildVM model = new ProductsToBuildVM(_context);
 
